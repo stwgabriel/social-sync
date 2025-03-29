@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 14% 96%; /* Light Beige #F1EFE7 */
+    --foreground: 280 47% 15%; /* Dark Purple shade adjusted for contrast #3C215B */
+
+    --card: 40 14% 96%;
+    --card-foreground: 280 47% 15%;
+
+    --popover: 40 14% 96%;
+    --popover-foreground: 280 47% 15%;
+
+    --primary: 342 70% 61%; /* Vibrant Pink #DE5B80 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 258 45% 13%; /* Deep Purple #1C122F */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 40 10% 90%;
+    --muted-foreground: 280 30% 30%;
+
+    --accent: 40 30% 85%;
+    --accent-foreground: 280 47% 15%;
+
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 10% 85%;
+    --input: 40 10% 85%;
+    --ring: 342 70% 61%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 258 45% 13%; /* Deep Purple #1C122F */
+    --foreground: 40 14% 96%; /* Light Beige #F1EFE7 */
+
+    --card: 258 45% 14%;
+    --card-foreground: 40 14% 96%;
+
+    --popover: 258 45% 13%;
+    --popover-foreground: 40 14% 96%;
+
+    --primary: 342 70% 61%; /* Vibrant Pink #DE5B80 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 280 47% 23%; /* Dark Purple #3C215B */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 258 30% 20%;
+    --muted-foreground: 40 10% 80%;
+
+    --accent: 258 30% 20%;
+    --accent-foreground: 40 14% 96%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 258 30% 26%;
+    --input: 258 30% 26%;
+    --ring: 342 70% 61%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease forwards;
+}
+
+/* Animation delays */
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+/* Photography section light mode override */
+.photography-section {
+  --background: 40 14% 96%; /* Light Beige #F1EFE7 */
+  --foreground: 280 47% 15%; /* Dark Purple */
+  --card: 40 14% 96%;
+  --card-foreground: 280 47% 15%;
+  --muted: 40 10% 90%;
+  --muted-foreground: 280 30% 30%;
+  background-color: #f1efe7;
+  color: #3c215b;
+}
+
