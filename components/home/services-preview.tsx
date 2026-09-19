@@ -104,7 +104,7 @@ export default function ServicesPreview() {
 
           <div
             className={cn(
-              "absolute right-0 top-[36%] z-10 text-[#DE5B80] opacity-0 sm:-right-3 lg:-right-16",
+              "absolute top-[36%] z-10 hidden text-[#DE5B80] opacity-0 lg:-right-16 lg:block",
               inView && "animate-fade-in animation-delay-600",
             )}
           >

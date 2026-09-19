@@ -108,10 +108,10 @@ export default function ProjectsShowcase() {
           </div>
 
           {/* Right column: fanned photo cards */}
-          <div className="relative">
+          <div className="relative min-w-0">
             <div
               className={cn(
-                "flex gap-5 overflow-x-auto pb-6 opacity-0 md:justify-center md:gap-0 md:overflow-visible md:pb-12",
+                "flex w-full max-w-full gap-5 overflow-x-auto pb-6 opacity-0 md:justify-center md:gap-0 md:overflow-visible md:pb-12",
                 sectionIsVisible && "animate-slide-up animation-delay-200",
               )}
             >
