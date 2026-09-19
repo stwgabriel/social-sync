@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useInView } from "react-intersection-observer"
 import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
+import { LiquidWave } from "@/components/ui/liquid-wave"
 import { useLanguage } from "@/components/language-provider"
 import { landingCopy } from "@/lib/landing-copy"
 
@@ -42,19 +43,12 @@ export default function ProjectsShowcase() {
 
   return (
     <div className="bg-[#F1EFE7]">
-      {/* Wavy top edge */}
-      <svg
-        className="block h-[48px] w-full sm:h-[66px] lg:h-[90px]"
-        viewBox="0 0 1440 90"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M0,55 C220,92 460,8 740,28 C980,45 1220,88 1440,35 L1440,90 L0,90 Z"
-          fill="#1C122F"
-          style={{ filter: "drop-shadow(0 -10px 14px rgba(28, 18, 47, 0.28))" }}
-        />
-      </svg>
+      {/* Top edge: looping liquid wave out of the cream section */}
+      <LiquidWave
+        fill="#1C122F"
+        shadow="0 -10px 14px rgba(28, 18, 47, 0.28)"
+        className="relative block h-[48px] w-full sm:h-[66px] lg:h-[90px]"
+      />
 
       <section
         ref={sectionRef}

@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Crown, Globe, Instagram, Linkedin, Play, Youtube } from "lucide-react"
 import { CtaBeam } from "@/components/ui/cta-beam"
+import { LiquidWave } from "@/components/ui/liquid-wave"
 import { useLanguage } from "@/components/language-provider"
 import { landingCopy } from "@/lib/landing-copy"
 
@@ -41,15 +42,17 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[100svh] w-full overflow-hidden bg-[#1C122F]">
-      {/* Background photo */}
-      <Image
-        src="/images/herobg.png"
-        alt="A group of smiling people outdoors"
-        fill
-        priority
-        sizes="100vw"
-        className="hero-background-drift object-cover object-center blur-[1.5px]"
-      />
+      {/* Background photo: zoom animates the wrapper, never the blurred image */}
+      <div className="hero-background-motion absolute inset-0">
+        <Image
+          src="/images/herobg.png"
+          alt="A group of smiling people outdoors"
+          fill
+          priority
+          sizes="100vw"
+          className="hero-background-still object-cover object-center blur-[1.5px]"
+        />
+      </div>
       {/* Legibility overlays: darker at top (navbar) and bottom */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1C122F]/70 via-transparent to-transparent" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-[#1C122F] via-[#1C122F]/70 to-transparent" aria-hidden="true" />
@@ -183,20 +186,12 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom organic wave into the cream section */}
-      <svg
-        className="absolute -bottom-px left-0 block h-[56px] w-full sm:h-[76px] lg:h-[110px]"
-        viewBox="0 0 1440 110"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M0,70 C240,110 480,20 720,45 C960,70 1200,105 1440,50 L1440,111 L0,111 Z"
-          fill="#F1EFE7"
-          stroke="none"
-          style={{ filter: "drop-shadow(0 -12px 18px rgba(12, 7, 24, 0.45))" }}
-        />
-      </svg>
+      {/* Bottom border: looping liquid wave into the cream section */}
+      <LiquidWave
+        fill="#F1EFE7"
+        shadow="0 -12px 18px rgba(12, 7, 24, 0.45)"
+        className="absolute -bottom-px left-0 h-[56px] w-full sm:h-[76px] lg:h-[110px]"
+      />
     </section>
   )
 }

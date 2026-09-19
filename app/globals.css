@@ -279,23 +279,64 @@
    animates, so the compositor moves an already-blurred layer.
    Offsets are percentages of the element box, keeping them inside the
    3% overhang at any viewport height. */
-@keyframes heroBackgroundDrift {
+/* The photo is blurred, so its own transform must never animate: a scale
+   change on the blurred element re-rasterises the blur every frame, which
+   caused the earlier flicker. The blur lives on the image, pinned as its
+   own layer; the zoom animates a wrapper, so the compositor scales an
+   already-blurred texture. Minimum scale is 1.08, keeping 4% overhang so
+   drift offsets (max 0.7% of the box) never expose an edge. */
+@keyframes heroBackgroundRecede {
   0% {
-    transform: translate3d(-1.6%, -0.9%, 0) scale(1.06);
+    transform: translate3d(-0.7%, -0.5%, 0) scale(1.18);
   }
   50% {
-    transform: translate3d(1.4%, 0.8%, 0) scale(1.06);
+    transform: translate3d(0.6%, 0.5%, 0) scale(1.08);
   }
   100% {
-    transform: translate3d(-0.6%, 1.2%, 0) scale(1.06);
+    transform: translate3d(-0.4%, 0.6%, 0) scale(1.16);
   }
 }
 
-.hero-background-drift {
+.hero-background-motion {
   backface-visibility: hidden;
   will-change: transform;
-  transform: translate3d(-1.6%, -0.9%, 0) scale(1.06);
-  animation: heroBackgroundDrift 48s ease-in-out infinite alternate;
+  transform: translate3d(-0.7%, -0.5%, 0) scale(1.18);
+  animation: heroBackgroundRecede 45s ease-in-out infinite alternate;
+}
+
+.hero-background-still {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Liquid section borders: each track is a 200%-wide strip holding two wave
+   periods; sliding it by -50% is exactly one period, so the loop is seamless.
+   Front and back layers run at different speeds (back reversed) so the two
+   sine shapes interfere like moving liquid. */
+@keyframes liquidWaveScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.liquid-wave-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  will-change: transform;
+}
+
+.liquid-wave-front {
+  animation: liquidWaveScroll 18s linear infinite;
+}
+
+.liquid-wave-back {
+  animation: liquidWaveScroll 29s linear infinite reverse;
 }
 
 .hero-glow {
@@ -610,8 +651,12 @@
     transform: none !important;
   }
 
-  .hero-background-drift {
+  .hero-background-motion {
     animation: none !important;
-    transform: translateZ(0) scale(1.06) !important;
+    transform: translateZ(0) scale(1.1) !important;
+  }
+
+  .liquid-wave-track {
+    animation: none !important;
   }
 }
