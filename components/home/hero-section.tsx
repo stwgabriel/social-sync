@@ -1,10 +1,12 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Crown, Globe, Instagram, Linkedin, Play, Youtube } from "lucide-react"
 import { CtaBeam } from "@/components/ui/cta-beam"
 import { LiquidWave } from "@/components/ui/liquid-wave"
+import { useReveal } from "@/lib/reveal"
 import { useLanguage } from "@/components/language-provider"
 import { landingCopy } from "@/lib/landing-copy"
 
@@ -40,26 +42,46 @@ export default function HeroSection() {
   const { language } = useLanguage()
   const copy = landingCopy[language].hero
 
+  // The hero's entrance animations are plain CSS that runs on mount, so the
+  // only reliable way to replay them is to remount the content. Bumping this
+  // key on re-entry gives every reveal a fresh node and a fresh animation.
+  // initialInView keeps the first paint from counting as a re-entry.
+  const { ref: heroRef, inView: heroInView } = useReveal({ threshold: 0.25, initialInView: true })
+  const [heroCycle, setHeroCycle] = useState(0)
+  const hasLeftHero = useRef(false)
+
+  useEffect(() => {
+    if (!heroInView) {
+      hasLeftHero.current = true
+      return
+    }
+    if (hasLeftHero.current) {
+      hasLeftHero.current = false
+      setHeroCycle((cycle) => cycle + 1)
+    }
+  }, [heroInView])
+
   return (
-    <section className="relative min-h-[100svh] w-full overflow-hidden bg-[#1C122F]">
-      {/* Background photo: zoom animates the wrapper, never the blurred image */}
-      <div className="hero-background-motion absolute inset-0">
-        <Image
-          src="/images/herobg.png"
-          alt="A group of smiling people outdoors"
-          fill
-          priority
-          sizes="100vw"
-          className="hero-background-still object-cover object-center blur-[1.5px]"
-        />
-      </div>
+    <section ref={heroRef} className="relative min-h-[100svh] w-full overflow-hidden bg-[#1C122F]">
+      {/* Background photo: constant scale, translation only (see globals.css) */}
+      <Image
+        src="/images/herobg.png"
+        alt="A group of smiling people outdoors"
+        fill
+        priority
+        sizes="100vw"
+        className="hero-background-drift object-cover object-center blur-[1.5px]"
+      />
       {/* Legibility overlays: darker at top (navbar) and bottom */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1C122F]/70 via-transparent to-transparent" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-[#1C122F] via-[#1C122F]/70 to-transparent" aria-hidden="true" />
       <div className="hero-glow hero-glow-left" aria-hidden="true" />
       <div className="hero-glow hero-glow-right" aria-hidden="true" />
 
-      <div className="relative flex min-h-[100svh] w-full flex-col px-5 pb-28 pt-28 sm:px-8 md:pt-32 lg:px-[clamp(3rem,5vw,6rem)]">
+      <div
+        key={heroCycle}
+        className="relative flex min-h-[100svh] w-full flex-col px-5 pb-28 pt-28 sm:px-8 md:pt-32 lg:px-[clamp(3rem,5vw,6rem)]"
+      >
         {/* Top-left handwritten annotation */}
         <div className="hero-note hero-note-left absolute left-[clamp(3rem,7vw,9rem)] top-[18%] hidden -rotate-6 lg:block">
           <p className="font-hand text-3xl leading-tight text-white">
@@ -189,7 +211,7 @@ export default function HeroSection() {
       {/* Bottom border: looping liquid wave into the cream section */}
       <LiquidWave
         fill="#F1EFE7"
-        shadow="0 -12px 18px rgba(12, 7, 24, 0.45)"
+        shadow="0 -14px 22px rgba(60, 33, 91, 0.65)"
         className="absolute -bottom-px left-0 h-[56px] w-full sm:h-[76px] lg:h-[110px]"
       />
     </section>

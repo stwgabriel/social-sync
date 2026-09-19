@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/components/language-provider"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useInView } from "react-intersection-observer"
+import { useReveal } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 import { Quote } from "lucide-react"
 import { urlFor } from "@/lib/sanity"
@@ -19,8 +19,7 @@ type Testimonial = {
 export default function Testimonials({ testimonials }: { testimonials?: Testimonial[] }) {
   const { translations } = useLanguage()
 
-  const { ref: sectionRef, inView: sectionIsVisible } = useInView({
-    triggerOnce: true,
+  const { ref: sectionRef, inView: sectionIsVisible } = useReveal({
     threshold: 0.1,
   })
 

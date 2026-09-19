@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { useInView } from "react-intersection-observer"
+import { useReveal } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 import { CtaBeam } from "@/components/ui/cta-beam"
 import { useLanguage } from "@/components/language-provider"
@@ -47,9 +47,9 @@ const pins = [
 ]
 
 export default function VisionSection() {
-  const { ref: visionRef, inView: visionInView } = useInView({ triggerOnce: true, threshold: 0.15 })
-  const { ref: hillsRef, inView: hillsInView } = useInView({ triggerOnce: true, threshold: 0.25 })
-  const { ref: teamRef, inView: teamInView } = useInView({ triggerOnce: true, threshold: 0.3 })
+  const { ref: visionRef, inView: visionInView } = useReveal({ threshold: 0.15 })
+  const { ref: hillsRef, inView: hillsInView } = useReveal({ threshold: 0.25 })
+  const { ref: teamRef, inView: teamInView } = useReveal({ threshold: 0.3 })
   const { language } = useLanguage()
   const copy = landingCopy[language].vision
   const ridgeClass = cn("vision-ridge", hillsInView && "animate-ridge-grow")

@@ -273,40 +273,31 @@
 }
 
 /* Hero motion system */
-/* The photo is blurred, so its scale must never change: a changing scale
-   forces the blur to re-rasterise every frame, which is what made this
-   flicker before. Scale stays fixed at 1.06 and only the translation
-   animates, so the compositor moves an already-blurred layer.
-   Offsets are percentages of the element box, keeping them inside the
-   3% overhang at any viewport height. */
-/* The photo is blurred, so its own transform must never animate: a scale
-   change on the blurred element re-rasterises the blur every frame, which
-   caused the earlier flicker. The blur lives on the image, pinned as its
-   own layer; the zoom animates a wrapper, so the compositor scales an
-   already-blurred texture. Minimum scale is 1.08, keeping 4% overhang so
-   drift offsets (max 0.7% of the box) never expose an edge. */
-@keyframes heroBackgroundRecede {
+/* Never animate scale on this image. It carries a blur filter, and a
+   changing scale forces the browser to re-rasterise that blur as the
+   layer resizes, which is what makes the photo flicker. The scale is a
+   constant 1.1 and only the translation animates, so the compositor
+   just slides a texture it rasterised once.
+   Offsets are percentages of the element box: scale 1.1 leaves 5%
+   overhang per side, and the largest offset is 2%, so no edge shows at
+   any viewport size. */
+@keyframes heroBackgroundDrift {
   0% {
-    transform: translate3d(-0.7%, -0.5%, 0) scale(1.18);
+    transform: translate3d(-2%, -1.2%, 0) scale(1.1);
   }
   50% {
-    transform: translate3d(0.6%, 0.5%, 0) scale(1.08);
+    transform: translate3d(1.8%, 1%, 0) scale(1.1);
   }
   100% {
-    transform: translate3d(-0.4%, 0.6%, 0) scale(1.16);
+    transform: translate3d(-1.2%, 1.6%, 0) scale(1.1);
   }
 }
 
-.hero-background-motion {
+.hero-background-drift {
   backface-visibility: hidden;
   will-change: transform;
-  transform: translate3d(-0.7%, -0.5%, 0) scale(1.18);
-  animation: heroBackgroundRecede 45s ease-in-out infinite alternate;
-}
-
-.hero-background-still {
-  transform: translateZ(0);
-  backface-visibility: hidden;
+  transform: translate3d(-2%, -1.2%, 0) scale(1.1);
+  animation: heroBackgroundDrift 60s ease-in-out infinite alternate;
 }
 
 /* Liquid section borders: each track is a 200%-wide strip holding two wave
@@ -328,7 +319,6 @@
   bottom: 0;
   left: 0;
   width: 200%;
-  will-change: transform;
 }
 
 .liquid-wave-front {
@@ -435,19 +425,19 @@
 
 @keyframes heroGlowLeft {
   from {
-    transform: translate3d(0, 0, 0) scale(0.9);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(7rem, -3rem, 0) scale(1.15);
+    transform: translate3d(7rem, -3rem, 0);
   }
 }
 
 @keyframes heroGlowRight {
   from {
-    transform: translate3d(0, 0, 0) scale(0.95);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(-6rem, 5rem, 0) scale(1.12);
+    transform: translate3d(-6rem, 5rem, 0);
   }
 }
 
@@ -651,7 +641,7 @@
     transform: none !important;
   }
 
-  .hero-background-motion {
+  .hero-background-drift {
     animation: none !important;
     transform: translateZ(0) scale(1.1) !important;
   }

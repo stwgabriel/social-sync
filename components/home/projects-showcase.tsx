@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { useInView } from "react-intersection-observer"
+import { useReveal } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
 import { LiquidWave } from "@/components/ui/liquid-wave"
@@ -34,8 +34,7 @@ const cards = [
 ]
 
 export default function ProjectsShowcase() {
-  const { ref: sectionRef, inView: sectionIsVisible } = useInView({
-    triggerOnce: true,
+  const { ref: sectionRef, inView: sectionIsVisible } = useReveal({
     threshold: 0.1,
   })
   const { language } = useLanguage()

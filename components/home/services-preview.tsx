@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { ArrowRight, Heart, Layers, Star, Users, Video } from "lucide-react"
-import { useInView } from "react-intersection-observer"
+import { useReveal } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 import { CtaBeam } from "@/components/ui/cta-beam"
 import { useLanguage } from "@/components/language-provider"
@@ -48,7 +48,7 @@ const services = [
 ]
 
 export default function ServicesPreview() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.08 })
+  const { ref, inView } = useReveal({ threshold: 0.08 })
   const { language } = useLanguage()
   const copy = landingCopy[language].services
 

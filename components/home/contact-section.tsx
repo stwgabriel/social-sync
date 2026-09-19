@@ -5,7 +5,7 @@ import type React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { useInView } from "react-intersection-observer"
+import { useReveal } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 import { CtaBeam } from "@/components/ui/cta-beam"
 import { useState } from "react"
@@ -31,8 +31,7 @@ export default function ContactSection() {
     message: "",
   })
 
-  const { ref: sectionRef, inView: sectionIsVisible } = useInView({
-    triggerOnce: true,
+  const { ref: sectionRef, inView: sectionIsVisible } = useReveal({
     threshold: 0.1,
   })
 
