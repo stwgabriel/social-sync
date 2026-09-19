@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react"
 import { useReveal } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 import { CtaBeam } from "@/components/ui/cta-beam"
+import { LiquidWave } from "@/components/ui/liquid-wave"
 import { useLanguage } from "@/components/language-provider"
 import { landingCopy } from "@/lib/landing-copy"
 
@@ -299,21 +300,12 @@ export default function VisionSection() {
           </div>
         </div>
 
-        <svg
+        {/* Top border of "Let's create together": looping two-tone liquid wave */}
+        <LiquidWave
+          fill="#DE5B80"
+          backFill="#3C215B"
           className="absolute inset-x-0 bottom-0 h-28 w-full md:h-36"
-          viewBox="0 0 1440 140"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M0,74 C210,15 420,112 690,60 C940,12 1180,102 1440,38 L1440,140 L0,140 Z"
-            fill="#3C215B"
-          />
-          <path
-            d="M0,98 C240,42 455,132 730,82 C1010,32 1215,119 1440,66 L1440,140 L0,140 Z"
-            fill="#DE5B80"
-          />
-        </svg>
+        />
       </div>
     </section>
   )

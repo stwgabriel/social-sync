@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { LiquidWave } from "@/components/ui/liquid-wave"
 import Image from "next/image"
 import { Instagram, Linkedin, Youtube } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
@@ -39,21 +40,12 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-[#B83F70] text-white">
-      <svg
+      {/* Bottom border of "Let's create together": looping two-tone liquid wave */}
+      <LiquidWave
+        fill="#1C122F"
+        backFill="#3C215B"
         className="block h-24 w-full md:h-36"
-        viewBox="0 0 1440 140"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M0,48 C220,112 430,12 710,68 C990,124 1190,25 1440,78 L1440,140 L0,140 Z"
-          fill="#3C215B"
-        />
-        <path
-          d="M0,82 C230,132 475,48 735,96 C1010,146 1220,61 1440,104 L1440,140 L0,140 Z"
-          fill="#1C122F"
-        />
-      </svg>
+      />
 
       <div className="w-full bg-[#1C122F] px-5 py-16 sm:px-8 md:py-20 lg:px-[clamp(3rem,5vw,6rem)]">
         <div className="relative mx-auto mb-14 aspect-[313/191] w-[min(66vw,630px)] md:mb-20">
