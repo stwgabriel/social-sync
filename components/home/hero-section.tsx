@@ -63,15 +63,18 @@ export default function HeroSection() {
 
   return (
     <section ref={heroRef} className="relative min-h-[100svh] w-full overflow-hidden bg-[#1C122F]">
-      {/* Background photo: constant scale, translation only (see globals.css) */}
-      <Image
-        src="/images/herobg.png"
-        alt="A group of smiling people outdoors"
-        fill
-        priority
-        sizes="100vw"
-        className="hero-background-drift object-cover object-center blur-[1.5px]"
-      />
+      {/* Background photo: the wrapper moves and the blurred image inside it
+          stays put, so the blur is rasterised once (see globals.css) */}
+      <div className="hero-background-motion absolute inset-0">
+        <Image
+          src="/images/herobg.png"
+          alt="A group of smiling people outdoors"
+          fill
+          priority
+          sizes="100vw"
+          className="hero-background-still object-cover object-center blur-[1.5px]"
+        />
+      </div>
       {/* Legibility overlays: darker at top (navbar) and bottom */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1C122F]/70 via-transparent to-transparent" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-[#1C122F] via-[#1C122F]/70 to-transparent" aria-hidden="true" />

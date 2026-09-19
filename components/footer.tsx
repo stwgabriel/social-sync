@@ -39,7 +39,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="w-full bg-[#B83F70] text-white">
+    <footer className="-mt-px w-full bg-[#B83F70] text-white">
       {/* Bottom border of "Let's create together": looping two-tone liquid wave */}
       <LiquidWave
         fill="#1C122F"

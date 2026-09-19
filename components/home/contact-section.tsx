@@ -87,7 +87,7 @@ export default function ContactSection() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-gradient-to-br from-[#DE5B80] via-[#D24F7C] to-[#B83F70] py-20 text-white md:py-28"
+      className="relative w-full overflow-hidden bg-gradient-to-b from-[#DE5B80] via-[#D24F7C] to-[#B83F70] py-20 text-white md:py-28"
     >
       <div className="pointer-events-none absolute -left-32 top-1/4 h-80 w-80 rounded-full bg-[#F1EFE7]/25 blur-[120px]" aria-hidden="true" />
       <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-[#3C215B]/35 blur-[140px]" aria-hidden="true" />

@@ -293,11 +293,20 @@
   }
 }
 
-.hero-background-drift {
+/* The filter must not sit on the element that animates. A filtered layer
+   that moves gets re-filtered every frame instead of being rasterised once
+   and translated by the compositor, which is what drags the framerate down.
+   This box moves and carries no filter; the blur rides on the static image
+   inside it, so that blur is computed one time. */
+.hero-background-motion {
   backface-visibility: hidden;
   will-change: transform;
   transform: translate3d(-2%, -1.2%, 0) scale(1.1);
   animation: heroBackgroundDrift 60s ease-in-out infinite alternate;
+}
+
+.hero-background-still {
+  backface-visibility: hidden;
 }
 
 /* Liquid section borders: each track is a 200%-wide strip holding two wave
@@ -329,29 +338,43 @@
   animation: liquidWaveScroll 29s linear infinite reverse;
 }
 
+/* Same split as the photo: blur(100px) is the most expensive paint on the
+   page, so it must live on a static child rather than on the box that moves. */
 .hero-glow {
   pointer-events: none;
   position: absolute;
   height: 24rem;
   width: 24rem;
+  will-change: transform;
+}
+
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   border-radius: 9999px;
   filter: blur(100px);
   opacity: 0.18;
-  will-change: transform;
 }
 
 .hero-glow-left {
   bottom: 5%;
   left: -8rem;
-  background: #8b4dff;
   animation: heroGlowLeft 12s ease-in-out infinite alternate;
+}
+
+.hero-glow-left::before {
+  background: #8b4dff;
 }
 
 .hero-glow-right {
   right: -7rem;
   top: 16%;
-  background: #de5b80;
   animation: heroGlowRight 14s ease-in-out infinite alternate;
+}
+
+.hero-glow-right::before {
+  background: #de5b80;
 }
 
 .hero-note {
@@ -641,7 +664,7 @@
     transform: none !important;
   }
 
-  .hero-background-drift {
+  .hero-background-motion {
     animation: none !important;
     transform: translateZ(0) scale(1.1) !important;
   }
