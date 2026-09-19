@@ -87,7 +87,11 @@ export default function ServicesPreview() {
               <div
                 key={service.id}
                 className={cn(
-                  "absolute flex flex-col items-center justify-center bg-gradient-to-br text-center text-white opacity-0 shadow-[inset_16px_18px_50px_rgba(255,255,255,0.12),inset_-22px_-24px_60px_rgba(28,18,47,0.18)]",
+                  // Light from above: a bright rim inside the top edge, shade
+                  // gathering inside the bottom, and a soft cast underneath so
+                  // the shape sits off the page rather than on it.
+                  "absolute flex flex-col items-center justify-center bg-gradient-to-br text-center text-white opacity-0",
+                  "shadow-[inset_10px_14px_38px_rgba(255,255,255,0.34),inset_-18px_-26px_54px_rgba(28,18,47,0.42),0_26px_46px_-14px_rgba(28,18,47,0.45)]",
                   BLOB_SIZE,
                   BLOB_SHAPE,
                   service.position,
@@ -96,7 +100,13 @@ export default function ServicesPreview() {
                   inView && service.delay,
                 )}
               >
-                <div className={service.contentRotation}>
+                {/* Specular sheen, brightest near the top where the light
+                    would strike, fading out before the middle. */}
+                <span
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(115%_85%_at_32%_10%,rgba(255,255,255,0.5),rgba(255,255,255,0.13)_34%,rgba(255,255,255,0)_62%)]"
+                  aria-hidden="true"
+                />
+                <div className={cn("relative z-10", service.contentRotation)}>
                   <Icon className="mx-auto mb-3 h-7 w-7" strokeWidth={1.5} aria-hidden="true" />
                   <p className="text-base font-semibold leading-[1.12] tracking-[-0.02em] sm:text-lg lg:text-xl">
                     {copy.items[index][0]}
