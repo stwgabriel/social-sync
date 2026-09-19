@@ -31,7 +31,7 @@ const values = [
         <span className="absolute bottom-0 left-0 h-8 w-8 rounded-full bg-gradient-to-tr from-[#8B5CF6] to-[#A78BFA]" />
         <span className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-gradient-to-tl from-[#F472B6] to-[#A78BFA]" />
         <span
-          className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-[#F4F1EA]"
+          className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-[#F1EFE7]"
           style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}
         />
       </div>
@@ -48,19 +48,31 @@ const pins = [
 
 export default function VisionSection() {
   const { ref: visionRef, inView: visionInView } = useInView({ triggerOnce: true, threshold: 0.15 })
+  const { ref: hillsRef, inView: hillsInView } = useInView({ triggerOnce: true, threshold: 0.25 })
   const { ref: teamRef, inView: teamInView } = useInView({ triggerOnce: true, threshold: 0.3 })
   const { language } = useLanguage()
   const copy = landingCopy[language].vision
+  const ridgeClass = cn("vision-ridge", hillsInView && "animate-ridge-grow")
 
   return (
     <section>
       {/* Part 1 — cream section with gradient hills */}
-      <div ref={visionRef} className="relative overflow-hidden bg-[#F4F1EA]">
+      <div ref={visionRef} className="relative overflow-hidden bg-[#F1EFE7]">
         {/* Layered wavy hills */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] md:h-[80%]" aria-hidden="true">
+        <div
+          ref={hillsRef}
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] md:h-[80%]"
+          aria-hidden="true"
+        >
           <svg className="h-full w-full" viewBox="0 0 1440 620" preserveAspectRatio="none" fill="none">
             <defs>
-              <radialGradient id="vision-glow" cx="0.78" cy="0.45" r="0.5">
+              <radialGradient
+                id="vision-glow"
+                cx="1120"
+                cy="310"
+                r="295"
+                gradientUnits="userSpaceOnUse"
+              >
                 <stop stopColor="#FDBA8C" stopOpacity="0.75" />
                 <stop offset="0.5" stopColor="#F472B6" stopOpacity="0.35" />
                 <stop offset="1" stopColor="#F472B6" stopOpacity="0" />
@@ -102,46 +114,67 @@ export default function VisionSection() {
               </linearGradient>
             </defs>
             {/* Warm glow behind the ridges */}
-            <rect x="620" y="0" width="820" height="620" fill="url(#vision-glow)" />
+            <rect
+              x="0"
+              y="0"
+              width="1440"
+              height="620"
+              fill="url(#vision-glow)"
+              className={cn("opacity-0", hillsInView && "animate-fade-in")}
+            />
             {/* Farthest, palest ridge cresting near the right edge */}
             <path
               d="M380,620 C560,560 740,440 920,310 C1040,222 1160,120 1280,85 C1340,68 1400,80 1440,100 L1440,620 Z"
               fill="url(#vision-hill-far)"
+              className={ridgeClass}
+              style={{ animationDelay: "0ms" }}
               opacity="0.7"
             />
             {/* Lavender ridge behind the warm one */}
             <path
               d="M440,620 C600,555 760,450 920,340 C1050,250 1180,165 1300,145 C1355,137 1405,150 1440,165 L1440,620 Z"
               fill="url(#vision-hill-back)"
+              className={ridgeClass}
+              style={{ animationDelay: "80ms" }}
               opacity="0.8"
             />
             {/* Warm sunlit ridge with a rounded crest */}
             <path
               d="M520,620 C680,570 830,490 970,395 C1070,328 1160,255 1260,240 C1330,230 1400,262 1440,290 L1440,620 Z"
               fill="url(#vision-hill-warm)"
+              className={ridgeClass}
+              style={{ animationDelay: "160ms" }}
               opacity="0.92"
             />
             {/* Translucent violet ridge overlapping the warm one */}
             <path
               d="M420,620 C600,590 780,525 940,445 C1070,380 1190,325 1300,318 C1355,315 1405,332 1440,350 L1440,620 Z"
               fill="url(#vision-hill-mid)"
+              className={ridgeClass}
+              style={{ animationDelay: "240ms" }}
               opacity="0.7"
             />
             {/* Foreground mound under the first pin */}
             <path
               d="M180,620 C340,608 500,555 660,512 C760,486 850,485 940,522 C1030,558 1130,598 1250,620 Z"
               fill="url(#vision-hill-mound)"
+              className={ridgeClass}
+              style={{ animationDelay: "320ms" }}
               opacity="0.92"
             />
             {/* Pink light catching the front-right slope */}
             <path
               d="M720,620 C880,600 1020,545 1150,485 C1250,440 1350,415 1440,405 L1440,620 Z"
               fill="url(#vision-hill-crest)"
+              className={ridgeClass}
+              style={{ animationDelay: "400ms" }}
             />
             {/* Dark front sweep */}
             <path
               d="M0,620 C260,606 520,572 760,520 C1000,466 1220,415 1440,330 L1440,620 L0,620 Z"
               fill="url(#vision-hill-front)"
+              className={ridgeClass}
+              style={{ animationDelay: "480ms" }}
               opacity="0.96"
             />
           </svg>
@@ -151,12 +184,22 @@ export default function VisionSection() {
         <div className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
           {pins.map((pin, index) => (
             <div key={copy.pins[index]} className="absolute" style={{ left: pin.left, top: pin.top }}>
-              <div className="flex items-center gap-3">
+              <div
+                className={cn("flex items-center gap-3 opacity-0", hillsInView && "animate-pin-drop")}
+                style={{ animationDelay: `${700 + index * 170}ms` }}
+              >
                 <span className="h-2.5 w-2.5 rounded-full bg-[#8B5CF6]" />
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#17121F]">{copy.pins[index]}</span>
               </div>
               <div className="ml-[4px]">
-                <span className={cn("block w-px bg-gradient-to-b from-[#8B5CF6]/70 to-[#8B5CF6]/10", pin.line)} />
+                <span
+                  className={cn(
+                    "vision-pin-line block w-px bg-gradient-to-b from-[#8B5CF6]/70 to-[#8B5CF6]/10",
+                    pin.line,
+                    hillsInView && "animate-pin-line",
+                  )}
+                  style={{ animationDelay: `${860 + index * 170}ms` }}
+                />
               </div>
             </div>
           ))}
@@ -168,7 +211,7 @@ export default function VisionSection() {
             <h2
               className={cn(
                 "text-4xl font-bold leading-[1.05] tracking-tight text-[#17121F] opacity-0 md:text-6xl lg:text-7xl",
-                visionInView && "animate-slide-up",
+                visionInView && "animate-drop-in",
               )}
             >
               {copy.title[0]}
@@ -179,7 +222,7 @@ export default function VisionSection() {
             <div
               className={cn(
                 "mt-14 grid grid-cols-2 gap-x-8 gap-y-10 opacity-0 sm:flex sm:flex-wrap sm:gap-x-14",
-                visionInView && "animate-fade-in animation-delay-200",
+                visionInView && "animate-slide-up animation-delay-200",
               )}
             >
               {values.map((value, index) => (
@@ -194,7 +237,7 @@ export default function VisionSection() {
               ))}
             </div>
 
-            <div className={cn("mt-14 opacity-0", visionInView && "animate-fade-in animation-delay-400")}>
+            <div className={cn("mt-14 opacity-0", visionInView && "animate-slide-up animation-delay-400")}>
               <CtaBeam>
                 <Link
                   href="/services"

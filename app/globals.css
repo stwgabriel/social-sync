@@ -503,6 +503,74 @@
   color: #3c215b;
 }
 
+/* Vision section — mountain growth, pin drops, split title reveal */
+@keyframes ridgeGrow {
+  from {
+    transform: scaleY(0.04);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes pinDrop {
+  from {
+    transform: translateY(-14px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pinLineDraw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes dropIn {
+  from {
+    transform: translateY(-28px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Every ridge shares the viewBox baseline, so one origin anchors them all */
+.vision-ridge {
+  transform: scaleY(0.04);
+  transform-origin: 720px 620px;
+}
+
+.animate-ridge-grow {
+  animation: ridgeGrow 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.vision-pin-line {
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+.animate-pin-line {
+  animation: pinLineDraw 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-pin-drop {
+  animation: pinDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-drop-in {
+  animation: dropIn 0.8s ease forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -515,5 +583,10 @@
 
   .opacity-0 {
     opacity: 1 !important;
+  }
+
+  .vision-ridge,
+  .vision-pin-line {
+    transform: none !important;
   }
 }
