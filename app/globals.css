@@ -273,9 +273,29 @@
 }
 
 /* Hero motion system */
-.hero-background-stable {
+/* The photo is blurred, so its scale must never change: a changing scale
+   forces the blur to re-rasterise every frame, which is what made this
+   flicker before. Scale stays fixed at 1.06 and only the translation
+   animates, so the compositor moves an already-blurred layer.
+   Offsets are percentages of the element box, keeping them inside the
+   3% overhang at any viewport height. */
+@keyframes heroBackgroundDrift {
+  0% {
+    transform: translate3d(-1.6%, -0.9%, 0) scale(1.06);
+  }
+  50% {
+    transform: translate3d(1.4%, 0.8%, 0) scale(1.06);
+  }
+  100% {
+    transform: translate3d(-0.6%, 1.2%, 0) scale(1.06);
+  }
+}
+
+.hero-background-drift {
   backface-visibility: hidden;
-  transform: translateZ(0) scale(1.015);
+  will-change: transform;
+  transform: translate3d(-1.6%, -0.9%, 0) scale(1.06);
+  animation: heroBackgroundDrift 48s ease-in-out infinite alternate;
 }
 
 .hero-glow {
@@ -588,5 +608,10 @@
   .vision-ridge,
   .vision-pin-line {
     transform: none !important;
+  }
+
+  .hero-background-drift {
+    animation: none !important;
+    transform: translateZ(0) scale(1.06) !important;
   }
 }

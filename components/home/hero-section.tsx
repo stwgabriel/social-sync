@@ -48,7 +48,7 @@ export default function HeroSection() {
         fill
         priority
         sizes="100vw"
-        className="hero-background-stable scale-[1.015] object-cover object-center blur-[1.5px]"
+        className="hero-background-drift object-cover object-center blur-[1.5px]"
       />
       {/* Legibility overlays: darker at top (navbar) and bottom */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1C122F]/70 via-transparent to-transparent" aria-hidden="true" />
