@@ -60,34 +60,89 @@ export default function VisionSection() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] md:h-[80%]" aria-hidden="true">
           <svg className="h-full w-full" viewBox="0 0 1440 620" preserveAspectRatio="none" fill="none">
             <defs>
+              <radialGradient id="vision-glow" cx="0.78" cy="0.45" r="0.5">
+                <stop stopColor="#FDBA8C" stopOpacity="0.75" />
+                <stop offset="0.5" stopColor="#F472B6" stopOpacity="0.35" />
+                <stop offset="1" stopColor="#F472B6" stopOpacity="0" />
+              </radialGradient>
+              <linearGradient id="vision-hill-far" x1="900" y1="0" x2="1200" y2="620" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#E9E2FB" />
+                <stop offset="0.6" stopColor="#C4B5FD" stopOpacity="0.85" />
+                <stop offset="1" stopColor="#A78BFA" stopOpacity="0.7" />
+              </linearGradient>
               <linearGradient id="vision-hill-back" x1="720" y1="40" x2="1100" y2="620" gradientUnits="userSpaceOnUse">
                 <stop stopColor="#C4B5FD" />
                 <stop offset="0.55" stopColor="#A78BFA" stopOpacity="0.9" />
                 <stop offset="1" stopColor="#7C3AED" stopOpacity="0.85" />
               </linearGradient>
-              <linearGradient id="vision-hill-mid" x1="900" y1="180" x2="1200" y2="620" gradientUnits="userSpaceOnUse">
+              <linearGradient id="vision-hill-warm" x1="900" y1="180" x2="1200" y2="620" gradientUnits="userSpaceOnUse">
                 <stop stopColor="#FDBA8C" />
                 <stop offset="0.35" stopColor="#F472B6" stopOpacity="0.95" />
                 <stop offset="1" stopColor="#8B5CF6" />
+              </linearGradient>
+              <linearGradient id="vision-hill-mid" x1="820" y1="260" x2="1120" y2="620" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#A78BFA" stopOpacity="0.9" />
+                <stop offset="0.55" stopColor="#7C3AED" stopOpacity="0.85" />
+                <stop offset="1" stopColor="#4C1D95" stopOpacity="0.9" />
+              </linearGradient>
+              <linearGradient id="vision-hill-mound" x1="620" y1="480" x2="900" y2="620" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#B7A4CF" stopOpacity="0.95" />
+                <stop offset="0.55" stopColor="#7C5AA8" />
+                <stop offset="1" stopColor="#4B2E73" />
               </linearGradient>
               <linearGradient id="vision-hill-front" x1="720" y1="300" x2="900" y2="620" gradientUnits="userSpaceOnUse">
                 <stop stopColor="#6D28D9" />
                 <stop offset="0.6" stopColor="#3B2A5A" />
                 <stop offset="1" stopColor="#17121F" />
               </linearGradient>
+              <linearGradient id="vision-hill-crest" x1="1000" y1="380" x2="1240" y2="620" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#F472B6" stopOpacity="0.7" />
+                <stop offset="0.6" stopColor="#8B5CF6" stopOpacity="0.55" />
+                <stop offset="1" stopColor="#4C1D95" stopOpacity="0.4" />
+              </linearGradient>
             </defs>
+            {/* Warm glow behind the ridges */}
+            <rect x="620" y="0" width="820" height="620" fill="url(#vision-glow)" />
+            {/* Farthest, palest ridge cresting near the right edge */}
             <path
-              d="M420,620 C560,540 680,420 840,330 C1020,230 1160,120 1440,60 L1440,620 Z"
+              d="M380,620 C560,560 740,440 920,310 C1040,222 1160,120 1280,85 C1340,68 1400,80 1440,100 L1440,620 Z"
+              fill="url(#vision-hill-far)"
+              opacity="0.7"
+            />
+            {/* Lavender ridge behind the warm one */}
+            <path
+              d="M440,620 C600,555 760,450 920,340 C1050,250 1180,165 1300,145 C1355,137 1405,150 1440,165 L1440,620 Z"
               fill="url(#vision-hill-back)"
+              opacity="0.8"
             />
+            {/* Warm sunlit ridge with a rounded crest */}
             <path
-              d="M540,620 C700,560 860,470 1020,380 C1180,290 1320,260 1440,220 L1440,620 Z"
+              d="M520,620 C680,570 830,490 970,395 C1070,328 1160,255 1260,240 C1330,230 1400,262 1440,290 L1440,620 Z"
+              fill="url(#vision-hill-warm)"
+              opacity="0.92"
+            />
+            {/* Translucent violet ridge overlapping the warm one */}
+            <path
+              d="M420,620 C600,590 780,525 940,445 C1070,380 1190,325 1300,318 C1355,315 1405,332 1440,350 L1440,620 Z"
               fill="url(#vision-hill-mid)"
-              opacity="0.9"
+              opacity="0.7"
             />
+            {/* Foreground mound under the first pin */}
             <path
-              d="M0,620 C240,600 480,560 720,490 C980,415 1220,400 1440,320 L1440,620 L0,620 Z"
+              d="M180,620 C340,608 500,555 660,512 C760,486 850,485 940,522 C1030,558 1130,598 1250,620 Z"
+              fill="url(#vision-hill-mound)"
+              opacity="0.92"
+            />
+            {/* Pink light catching the front-right slope */}
+            <path
+              d="M720,620 C880,600 1020,545 1150,485 C1250,440 1350,415 1440,405 L1440,620 Z"
+              fill="url(#vision-hill-crest)"
+            />
+            {/* Dark front sweep */}
+            <path
+              d="M0,620 C260,606 520,572 760,520 C1000,466 1220,415 1440,330 L1440,620 L0,620 Z"
               fill="url(#vision-hill-front)"
+              opacity="0.96"
             />
           </svg>
         </div>
