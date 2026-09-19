@@ -1,5 +1,5 @@
 import type React from "react"
-import { Inter } from "next/font/google"
+import { Plus_Jakarta_Sans, Caveat } from "next/font/google"
 import "@/app/globals.css"
 import { ThemeContextProvider } from "@/components/theme-context"
 import LanguageProvider from "@/components/language-provider"
@@ -7,7 +7,8 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Toaster } from "@/components/ui/toaster"
 
-const inter = Inter({ subsets: ["latin"] })
+const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] })
+const caveat = Caveat({ subsets: ["latin"], variable: "--font-hand" })
 
 export const metadata = {
   title: {
@@ -28,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${jakarta.className} ${caveat.variable}`}>
         <ThemeContextProvider>
           <LanguageProvider>
             <div className="flex flex-col min-h-screen">

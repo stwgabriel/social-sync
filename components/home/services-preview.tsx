@@ -1,128 +1,127 @@
 "use client"
 
-import { useLanguage } from "@/components/language-provider"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Share2, LineChart, Code, Camera } from "lucide-react"
 import Link from "next/link"
+import { ArrowRight, Heart, Layers, Star, Users, Video } from "lucide-react"
 import { useInView } from "react-intersection-observer"
 import { cn } from "@/lib/utils"
+import { CtaBeam } from "@/components/ui/cta-beam"
+import { useLanguage } from "@/components/language-provider"
+import { landingCopy } from "@/lib/landing-copy"
 
-type Service = {
-  _id: string
-  title: string
-  slug: { current: string }
-  description: string
-  icon: string
-}
+const services = [
+  {
+    id: "social-community",
+    icon: Users,
+    position: "left-[2%] top-[5%] h-[42%] w-[42%] -rotate-[7deg]",
+    shape: "rounded-[54%_46%_57%_43%/42%_56%_44%_58%]",
+    color: "from-[#f2a4bb] via-[#de5b80] to-[#b96a9d]",
+    contentRotation: "rotate-[7deg]",
+    delay: "",
+  },
+  {
+    id: "branding-creative",
+    icon: Star,
+    position: "right-[8%] top-0 h-[45%] w-[47%] rotate-[5deg]",
+    shape: "rounded-[42%_58%_49%_51%/55%_43%_57%_45%]",
+    color: "from-[#3c215b] via-[#7b3f76] to-[#de5b80]",
+    contentRotation: "-rotate-[5deg]",
+    delay: "animation-delay-200",
+  },
+  {
+    id: "photo-video",
+    icon: Video,
+    position: "bottom-[2%] left-[8%] h-[46%] w-[43%] rotate-[3deg]",
+    shape: "rounded-[46%_54%_40%_60%/58%_42%_58%_42%]",
+    color: "from-[#3c215b] via-[#251534] to-[#1c122f]",
+    contentRotation: "-rotate-[3deg]",
+    delay: "animation-delay-400",
+  },
+  {
+    id: "web-technology",
+    icon: Layers,
+    position: "bottom-[5%] right-[5%] h-[43%] w-[43%] -rotate-[4deg]",
+    shape: "rounded-[58%_42%_52%_48%/47%_57%_43%_53%]",
+    color: "from-[#b7a4cf] via-[#8463a5] to-[#3c215b]",
+    contentRotation: "rotate-[4deg]",
+    delay: "animation-delay-600",
+  },
+]
 
-export default function ServicesPreview({ services }: { services?: Service[] }) {
-  const { translations } = useLanguage()
-
-  const { ref: sectionRef, inView: sectionIsVisible } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-
-  // If no services are provided from CMS, use default services
-  const defaultServices = [
-    {
-      _id: "social-media",
-      icon: "share2",
-      title: translations.services.socialMedia.title,
-      description: translations.services.socialMedia.description,
-      slug: { current: "social-media" },
-    },
-    {
-      _id: "paid-traffic",
-      icon: "lineChart",
-      title: translations.services.paidTraffic.title,
-      description: translations.services.paidTraffic.description,
-      slug: { current: "paid-traffic" },
-    },
-    {
-      _id: "web-development",
-      icon: "code",
-      title: translations.services.webDevelopment.title,
-      description: translations.services.webDevelopment.description,
-      slug: { current: "web-development" },
-    },
-    {
-      _id: "photography",
-      icon: "camera",
-      title: translations.services.photography.title,
-      description: translations.services.photography.description,
-      slug: { current: "photography" },
-    },
-  ]
-
-  const displayServices = services || defaultServices
-
-  // Function to render the appropriate icon based on the icon name
-  const renderIcon = (iconName: string) => {
-    switch (iconName) {
-      case "share2":
-        return <Share2 className="h-8 w-8 text-[#DE5B80]" />
-      case "lineChart":
-        return <LineChart className="h-8 w-8 text-[#DE5B80]" />
-      case "code":
-        return <Code className="h-8 w-8 text-[#DE5B80]" />
-      case "camera":
-        return <Camera className="h-8 w-8 text-[#DE5B80]" />
-      default:
-        return <Share2 className="h-8 w-8 text-[#DE5B80]" />
-    }
-  }
+export default function ServicesPreview() {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.08 })
+  const { language } = useLanguage()
+  const copy = landingCopy[language].services
 
   return (
-    <section ref={sectionRef} className="py-20 w-full bg-background">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-12">
-          <h2 className={cn("text-3xl md:text-4xl font-bold mb-4 opacity-0", sectionIsVisible && "animate-fade-in")}>
-            {translations.services.title}
+    <section ref={ref} className="w-full overflow-hidden bg-[#F1EFE7] py-20 md:py-24 lg:min-h-[680px] lg:py-20">
+      <div className="grid w-full items-center gap-14 px-5 sm:px-8 lg:grid-cols-[minmax(360px,0.72fr)_minmax(620px,1.28fr)] lg:gap-[clamp(2rem,4vw,6rem)] lg:px-[clamp(3rem,7vw,9rem)]">
+        <div className={cn("relative z-10 opacity-0", inView && "animate-slide-up")}>
+          <h2 className="text-[clamp(2.75rem,5vw,4.5rem)] font-bold leading-[0.99] tracking-[-0.055em] text-[#1C122F]">
+            {copy.title[0]}
+            <br />
+            {copy.title[1]}
+            <br />
+            <span className="text-gradient-brand">{copy.title[2]}</span>
           </h2>
-          <div className="w-20 h-1 bg-[#DE5B80] mx-auto" />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {displayServices.map((service, index) => (
-            <Card
-              key={service._id}
-              className={cn(
-                "border-2 border-border hover:border-[#DE5B80]/50 transition-all duration-300 opacity-0",
-                sectionIsVisible && `animate-slide-up animation-delay-${index * 200}`,
-              )}
+          <CtaBeam className="mt-10 md:mt-12">
+            <Link
+              href="/services"
+              className="group inline-flex min-h-14 items-center gap-4 rounded-full bg-[#1C122F] px-7 text-sm font-semibold text-white transition-transform duration-300 hover:-translate-y-0.5"
             >
-              <CardHeader>
-                <div className="rounded-full bg-primary/10 p-3 w-fit mb-4">{renderIcon(service.icon)}</div>
-                <CardTitle>{service.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-muted-foreground">{service.description}</CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Button asChild variant="outline">
-                  <Link href={`/services#${service.slug.current}`}>{translations.services.viewAll}</Link>
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+              {copy.cta}
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
+          </CtaBeam>
         </div>
 
-        <div className="mt-12 text-center">
-          <Button
-            asChild
-            size="lg"
+        <div className="relative mx-auto h-[420px] w-full max-w-[520px] sm:h-[500px] sm:max-w-[680px] lg:h-[520px] lg:max-w-[760px]">
+          {services.map((service, index) => {
+            const Icon = service.icon
+
+            return (
+              <div
+                key={service.id}
+                className={cn(
+                  "absolute flex flex-col items-center justify-center bg-gradient-to-br text-center text-white opacity-0 shadow-[inset_16px_18px_50px_rgba(255,255,255,0.12),inset_-22px_-24px_60px_rgba(28,18,47,0.18)]",
+                  service.position,
+                  service.shape,
+                  service.color,
+                  inView && "animate-scale-in",
+                  inView && service.delay,
+                )}
+              >
+                <div className={service.contentRotation}>
+                  <Icon className="mx-auto mb-3 h-7 w-7" strokeWidth={1.5} aria-hidden="true" />
+                  <p className="text-base font-semibold leading-[1.12] tracking-[-0.02em] sm:text-lg lg:text-xl">
+                    {copy.items[index][0]}
+                    <br />
+                    {copy.items[index][1]}
+                  </p>
+                </div>
+              </div>
+            )
+          })}
+
+          <div
             className={cn(
-              "bg-[#DE5B80] hover:bg-[#DE5B80]/90 text-white opacity-0",
-              sectionIsVisible && "animate-fade-in animation-delay-600",
+              "absolute right-0 top-[36%] z-10 text-[#DE5B80] opacity-0 sm:-right-3 lg:-right-16",
+              inView && "animate-fade-in animation-delay-600",
             )}
           >
-            <Link href="/services">{translations.services.viewAll}</Link>
-          </Button>
+            <div className="flex flex-col items-start font-hand text-[1.75rem] leading-[0.9] sm:text-[2rem] lg:text-[2.15rem]">
+              {copy.notes.map((word, index) => (
+                <span
+                  key={word}
+                  style={{ transform: `rotate(${-8 + index * 3}deg) translateX(${index * 7}px)` }}
+                >
+                  {word}
+                </span>
+              ))}
+            </div>
+            <Heart className="ml-9 mt-3 h-6 w-6 -rotate-12" strokeWidth={1.8} aria-hidden="true" />
+          </div>
         </div>
       </div>
     </section>
   )
 }
-

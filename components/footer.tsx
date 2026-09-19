@@ -1,139 +1,111 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
+import { Instagram, Linkedin, Youtube } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
-import { Instagram, Linkedin, Mail, Facebook, MapPin } from "lucide-react"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
+import { landingCopy } from "@/lib/landing-copy"
+
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298 0 .595.047.88.139V9.4a6.33 6.33 0 0 0-1-.05A6.34 6.34 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z" />
+    </svg>
+  )
+}
+
+const socials = [
+  { name: "Instagram", href: "https://instagram.com", Icon: Instagram },
+  { name: "TikTok", href: "https://tiktok.com", Icon: TikTokIcon },
+  { name: "LinkedIn", href: "https://linkedin.com", Icon: Linkedin },
+  { name: "YouTube", href: "https://youtube.com", Icon: Youtube },
+]
 
 export default function Footer() {
-  const { translations }: any = useLanguage()
-
-  const currentYear = new Date().getFullYear()
-
-  const pathname = usePathname()
-
+  const { language } = useLanguage()
+  const copy = landingCopy[language]
   const navLinks = [
-    { name: translations.navigation.home, href: "/" },
-    { name: translations.navigation.services, href: "/services" },
-    { name: translations.navigation.projects, href: "/projects" },
-    { name: translations.navigation.contact, href: "/contact" },
+    { name: copy.nav.services, href: "/services" },
+    { name: copy.nav.work, href: "/projects" },
+    { name: copy.nav.about, href: "#" },
+    { name: copy.nav.insights, href: "#" },
+    { name: copy.nav.contact, href: "/contact" },
   ]
 
   return (
-    <footer className="w-full bg-background border-t">
-      <div className="container mx-auto px-4 md:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="flex flex-col space-y-4">
-            <h3 className="text-xl font-bold text-center md:text-start">Social Sync</h3>
-            <p className="text-sm text-muted-foreground text-center md:text-start">{translations.footer.tagline}</p>
-            <div className="flex space-x-4 pt-2 justify-center md:justify-start">
-              <Link href="https://instagram.com" className="text-muted-foreground hover:text-[#DE5B80]">
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
-              </Link>
-              <Link href="https://facebook.com" className="text-muted-foreground hover:text-[#DE5B80]">
-                <Facebook className="h-5 w-5" />
-                <span className="sr-only">Facebook</span>
-              </Link>
-              <Link href="https://linkedin.com" className="text-muted-foreground hover:text-[#DE5B80]">
-                <Linkedin className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
-              <Link href="mailto:contact@socialsync.com" className="text-muted-foreground hover:text-[#DE5B80]">
-                <Mail className="h-5 w-5" />
-                <span className="sr-only">Email</span>
-              </Link>
-            </div>
-          </div>
+    <footer className="w-full bg-[#B83F70] text-white">
+      <svg
+        className="block h-24 w-full md:h-36"
+        viewBox="0 0 1440 140"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M0,48 C220,112 430,12 710,68 C990,124 1190,25 1440,78 L1440,140 L0,140 Z"
+          fill="#3C215B"
+        />
+        <path
+          d="M0,82 C230,132 475,48 735,96 C1010,146 1220,61 1440,104 L1440,140 L0,140 Z"
+          fill="#1C122F"
+        />
+      </svg>
 
-          <div>
-            <h3 className="font-bold mb-4 text-center md:text-start">{translations.footer.quickLinks}</h3>
-
-            <nav className="flex flex-col gap-4 items-center md:items-start">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "text-sm font-medium transition-colors hover:text-[#DE5B80]",
-                    pathname === link.href ? "text-[#DE5B80]" : "text-foreground/80",
-                  )}
-                >
-                  <span>{link.name}</span>
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          <div>
-            <h3 className="font-bold mb-4 text-center md:text-start">{translations.services.title}</h3>
-
-            <ul className="space-y-2 flex flex-col items-center md:items-start">
-              <li>
-                <Link href="/services#social-media" className="text-sm text-muted-foreground hover:text-[#DE5B80]">
-                  {translations.services.socialMedia.title}
-                </Link>
-              </li>
-              <li>
-                <Link href="/services#paid-traffic" className="text-sm text-muted-foreground hover:text-[#DE5B80]">
-                  {translations.services.paidTraffic.title}
-                </Link>
-              </li>
-              <li>
-                <Link href="/services#web-development" className="text-sm text-muted-foreground hover:text-[#DE5B80]">
-                  {translations.services.webDevelopment.title}
-                </Link>
-              </li>
-              <li>
-                <Link href="/services#photography" className="text-sm text-muted-foreground hover:text-[#DE5B80]">
-                  {translations.services.photography.title}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-bold mb-4 text-center md:text-start">{translations.contact.title}</h3>
-            <div className="flex justify-center md:justify-start">
-              {/* <div className="flex items-start space-x-2">
-                <MapPin className="h-5 w-5 text-[#DE5B80] mt-0.5" />
-                <span className="text-sm text-muted-foreground">
-                  Rua Exemplo, 123
-                  <br />
-                  São Paulo, SP
-                  <br />
-                  Brasil
-                </span>
-              </div> */}
-              <div className="flex items-center space-x-2">
-                <Mail className="h-5 w-5 text-[#DE5B80]" />
-                <Link
-                  href="mailto:contact@socialsyncmkt.com"
-                  className="text-sm text-muted-foreground hover:text-[#DE5B80]"
-                >
-                  contact@socialsyncmkt.com
-                </Link>
-              </div>
-            </div>
-          </div>
+      <div className="w-full bg-[#1C122F] px-5 py-16 sm:px-8 md:py-20 lg:px-[clamp(3rem,5vw,6rem)]">
+        <div className="relative mx-auto mb-14 aspect-[313/191] w-[min(66vw,630px)] md:mb-20">
+          <Image
+            src="/images/brand/social-logo-bg.png"
+            alt="Social Sync MKT"
+            fill
+            sizes="(max-width: 768px) 66vw, 630px"
+            className="object-contain"
+          />
         </div>
 
-        <div className="border-t mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-xs text-muted-foreground">
-            © {currentYear} Social Sync. {translations.footer.allRightsReserved}
-          </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link href="/privacy" className="text-xs text-muted-foreground hover:text-[#DE5B80]">
-              {translations.footer.privacyPolicy}
-            </Link>
-            <Link href="/terms" className="text-xs text-muted-foreground hover:text-[#DE5B80]">
-              {translations.footer.termsOfService}
-            </Link>
+        {/* Three-part row */}
+        <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-10 text-center md:text-left">
+          {/* Left: taglines + copyright */}
+          <div className="space-y-1">
+            <p className="text-sm text-white/50">{copy.footer.lines[0]}</p>
+            <p className="text-sm text-white/50">{copy.footer.lines[1]}</p>
+            <p className="pt-4 text-xs text-white/40">© 2026 Social Sync. {copy.footer.rights}</p>
+          </div>
+
+          {/* Center: links */}
+          <nav className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-sm text-white/90 transition-colors hover:text-white"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right: socials + tagline */}
+          <div className="flex flex-col items-center md:items-end gap-4">
+            <div className="flex items-center gap-5">
+              {socials.map(({ name, href, Icon }) => (
+                <Link
+                  key={name}
+                  href={href}
+                  className="text-white/90 transition-colors hover:text-white"
+                >
+                  <Icon className="h-5 w-5" />
+                  <span className="sr-only">{name}</span>
+                </Link>
+              ))}
+            </div>
+            <p className="text-sm text-white/50">{copy.footer.tagline}</p>
           </div>
         </div>
       </div>
     </footer>
   )
 }
-

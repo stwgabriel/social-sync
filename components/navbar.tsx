@@ -2,18 +2,27 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { useTheme } from "next-themes"
 import { useLanguage } from "@/components/language-provider"
-import { Sun, Moon, Menu } from "lucide-react"
+import { ArrowRight, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { CtaBeam } from "@/components/ui/cta-beam"
+import { landingCopy } from "@/lib/landing-copy"
 
 export default function Navbar() {
-  const { theme, setTheme } = useTheme()
-  const { language, setLanguage, translations }: any = useLanguage()
+  const { language, setLanguage } = useLanguage()
   const pathname = usePathname()
+  const copy = landingCopy[language].nav
+  const navLinks = [
+    { name: copy.services, href: "/services" },
+    { name: copy.work, href: "/projects" },
+    { name: copy.about, href: "#" },
+    { name: copy.insights, href: "#" },
+    { name: copy.contact, href: "/contact" },
+  ]
 
   const [scrolled, setScrolled] = useState(false)
 
@@ -26,93 +35,108 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const navLinks = [
-    { name: translations.navigation.home, href: "/" },
-    { name: translations.navigation.services, href: "/services" },
-    { name: translations.navigation.projects, href: "/projects" },
-    { name: translations.navigation.contact, href: "/contact" },
-  ]
-
-  console.log(translations)
-
   return (
     <header
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300",
-        scrolled ? "bg-background/80 backdrop-blur-md border-b" : "bg-transparent",
+        scrolled ? "bg-[#1C122F]/80 backdrop-blur-md border-b border-white/10" : "bg-transparent",
       )}
     >
-      <div className="container mx-auto px-4 md:px-6 flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="font-bold text-xl bg-gradient-to-r from-[#DE5B80] to-[#3C215B] bg-clip-text text-transparent">
-            Social Sync
-          </div>
+      <div className="flex h-24 w-full items-center justify-between px-5 sm:px-8 lg:px-[clamp(3rem,5vw,6rem)]">
+        <Link href="/" aria-label="Social Sync — Home" className="relative block h-12 w-36 sm:w-40">
+          <Image
+            src="/images/brand/social-logo.png"
+            alt="Social Sync MKT"
+            fill
+            priority
+            sizes="160px"
+            className="object-contain object-left"
+          />
         </Link>
 
-        <nav className="hidden md:flex gap-6">
+        {/* Center links */}
+        <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
-              key={link.href}
+              key={link.name}
               href={link.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-[#DE5B80]",
-                pathname === link.href ? "text-[#DE5B80]" : "text-foreground/80",
+                "text-sm text-white/90 transition-colors hover:text-white",
+                pathname === link.href && "text-white font-medium",
               )}
             >
-              <span>{link.name}</span>
+              {link.name}
             </Link>
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        {/* Right side */}
+        <div className="flex items-center gap-3">
+          <CtaBeam className="hidden sm:block" strength={0.55}>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full border border-white/70 px-5 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
+            >
+              {copy.cta}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </CtaBeam>
+
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setLanguage(language === "pt" ? "en" : "pt")}
-            className="text-sm rounded-full w-8 h-8"
+            className="text-sm rounded-full w-8 h-8 text-white hover:bg-white/10 hover:text-white"
             aria-label={language === "pt" ? "Switch to English" : "Mudar para Português"}
           >
             {language === "pt" ? "EN" : "PT"}
           </Button>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-full"
-          >
-            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
-
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white hover:bg-white/10 hover:text-white md:hidden"
+                aria-label={copy.openMenu}
+              >
                 <Menu className="h-5 w-5" />
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">{copy.openMenu}</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
+            <SheetContent side="right" className="bg-[#1C122F] border-l border-white/10 text-white">
               <div className="flex flex-col h-full">
-                <div className="flex items-center justify-between pb-4 border-b">
-                  <div className="font-bold text-xl bg-gradient-to-r from-[#DE5B80] to-[#3C215B] bg-clip-text text-transparent">
-                    Social Sync
+                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                  <div className="relative h-10 w-32">
+                    <Image
+                      src="/images/brand/social-logo.png"
+                      alt="Social Sync MKT"
+                      fill
+                      sizes="128px"
+                      className="object-contain object-left"
+                    />
                   </div>
                 </div>
                 <nav className="flex flex-col gap-4 mt-8">
                   {navLinks.map((link) => (
                     <Link
-                      key={link.href}
+                      key={link.name}
                       href={link.href}
                       className={cn(
-                        "text-lg font-medium transition-colors hover:text-[#DE5B80] py-2",
-                        pathname === link.href ? "text-[#DE5B80]" : "text-foreground/80",
+                        "text-lg text-white/80 transition-colors hover:text-white py-2",
+                        pathname === link.href && "text-white font-medium",
                       )}
                     >
                       {link.name}
                     </Link>
                   ))}
+                  <Link
+                    href="/contact"
+                    className="mt-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/70 px-5 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
+                  >
+                    {copy.cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </nav>
               </div>
             </SheetContent>
@@ -122,4 +146,3 @@ export default function Navbar() {
     </header>
   )
 }
-
