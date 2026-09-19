@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { HandwrittenWords } from "@/components/ui/handwritten-words"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -204,11 +205,13 @@ export default function ContactSection() {
               sectionIsVisible && "animate-slide-up animation-delay-400",
             )}
           >
-            <p className="font-hand -rotate-3 text-right text-2xl leading-tight text-[#1C122F] md:text-3xl">
-              {copy.note[0]}
-              <br />
-              {copy.note[1]}
-            </p>
+            <HandwrittenWords
+              words={copy.note}
+              play={sectionIsVisible}
+              color="#1C122F"
+              fontSize={28}
+              className="flex -rotate-3 flex-col items-end"
+            />
 
             <div className="rounded-2xl border border-white/10 bg-[#221A31]/65 p-6 shadow-[0_30px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#8B5CF6]">

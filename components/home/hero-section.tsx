@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Crown, Globe, Instagram, Linkedin, Play, Youtube } from "lucide-react"
 import { CtaBeam } from "@/components/ui/cta-beam"
+import { HandwrittenWords } from "@/components/ui/handwritten-words"
 import { LiquidWave } from "@/components/ui/liquid-wave"
 import { useReveal } from "@/lib/reveal"
 import { useLanguage } from "@/components/language-provider"
@@ -89,23 +90,25 @@ export default function HeroSection() {
       >
         {/* Top-left handwritten annotation */}
         <div className="hero-note hero-note-left absolute left-[clamp(3rem,7vw,9rem)] top-[18%] hidden -rotate-6 lg:block">
-          <p className="font-hand text-3xl leading-tight text-white">
-            {copy.note[0]}
-            <br />
-            {copy.note[1]}
-          </p>
+          <HandwrittenWords
+            words={copy.note}
+            play
+            color="#FFFFFF"
+            fontSize={30}
+            className="flex flex-col items-start"
+          />
           <HandArrow className="ml-6 mt-1 h-10 w-10 text-white" />
         </div>
 
         {/* Top-right handwritten annotation + globe */}
         <div className="hero-note hero-note-right absolute right-[clamp(3rem,7vw,9rem)] top-[17%] hidden rotate-3 text-right lg:block">
-          <p className="font-hand text-3xl leading-tight text-white">
-            {copy.actions[0]}
-            <br />
-            {copy.actions[1]}
-            <br />
-            {copy.actions[2]}
-          </p>
+          <HandwrittenWords
+            words={copy.actions}
+            play
+            color="#FFFFFF"
+            fontSize={30}
+            className="flex flex-col items-end"
+          />
           <span className="mt-2 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dashed border-white/80">
             <Globe className="h-5 w-5 text-white" strokeWidth={1.5} />
           </span>
@@ -122,11 +125,19 @@ export default function HeroSection() {
               className="object-cover"
             />
           </div>
-          <p className="font-hand mt-2 -rotate-2 text-center text-xl leading-tight text-pink-500">
-            {copy.polaroid[0]}
-            <br />
-            <span className="text-[#1C122F]">{copy.polaroid[1]}</span> &hearts;
-          </p>
+          <div className="mt-2 -rotate-2">
+            <HandwrittenWords
+              words={copy.polaroid}
+              play
+              color="#EC4899"
+              colorAt={(index) => (index === 1 ? "#1C122F" : undefined)}
+              fontSize={20}
+              className="flex flex-col items-center"
+            />
+            <span className="block text-center text-xl leading-tight text-[#1C122F]" aria-hidden="true">
+              &hearts;
+            </span>
+          </div>
         </div>
 
         {/* Phone mockup */}
@@ -137,13 +148,18 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-[#1C122F]/40" aria-hidden="true" />
               {/* Notch */}
               <div className="absolute left-1/2 top-2 h-4 w-20 -translate-x-1/2 rounded-full bg-[#1C122F]" aria-hidden="true" />
-              <p className="font-hand absolute inset-0 flex -rotate-3 items-center justify-center text-center text-3xl leading-tight text-white">
-                {copy.phone[0]}
-                <br />
-                {copy.phone[1]}
-                <br />
-                {copy.phone[2]} &hearts;
-              </p>
+              <div className="absolute inset-0 flex -rotate-3 flex-col items-center justify-center">
+                <HandwrittenWords
+                  words={copy.phone}
+                  play
+                  color="#FFFFFF"
+                  fontSize={30}
+                  className="flex flex-col items-center"
+                />
+                <span className="font-hand text-3xl leading-tight text-white" aria-hidden="true">
+                  &hearts;
+                </span>
+              </div>
             </div>
           </div>
         </div>

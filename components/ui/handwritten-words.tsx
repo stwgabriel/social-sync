@@ -9,8 +9,8 @@ const FONT_URL = "/fonts/caveat.ttf"
 // are baked into the constructor.
 const instances = new Map<string, Promise<any>>()
 
-function getInstance(color: string, fontSize: number, duration: number, stagger: number) {
-  const key = [color, fontSize, duration, stagger].join("/")
+function getInstance(fontSize: number, duration: number, stagger: number) {
+  const key = [fontSize, duration, stagger].join("/")
   let instance = instances.get(key)
 
   if (!instance) {
@@ -20,7 +20,8 @@ function getInstance(color: string, fontSize: number, duration: number, stagger:
       const created = new SVGTextAnimate(
         FONT_URL,
         { duration, delay: stagger, mode: "delay", "fill-mode": "forwards" },
-        { stroke: color, "stroke-width": "1px", "font-size": fontSize, "fill-color": color },
+        // Placeholder colour; each line is recoloured once it is rendered.
+        { stroke: "#000000", "stroke-width": "1px", "font-size": fontSize, "fill-color": "#000000" },
       )
       await created.setFont()
       return created
@@ -31,11 +32,20 @@ function getInstance(color: string, fontSize: number, duration: number, stagger:
   return instance
 }
 
+function paint(host: HTMLElement, color: string) {
+  const group = host.querySelector("#svgGroup") as SVGGElement | null
+  if (!group) return
+  group.style.fill = color
+  group.style.stroke = color
+}
+
 type HandwrittenWordsProps = {
   words: readonly string[]
   /** Each word draws itself while true, and clears when it goes false. */
   play: boolean
   color: string
+  /** Overrides `color` for individual lines, for two-tone captions. */
+  colorAt?: (index: number) => string | undefined
   fontSize: number
   duration?: number
   /** Gap between letters inside a word, so each word writes left to right. */
@@ -51,6 +61,7 @@ export function HandwrittenWords({
   words,
   play,
   color,
+  colorAt,
   fontSize,
   duration = 620,
   stagger = 75,
@@ -77,7 +88,7 @@ export function HandwrittenWords({
 
     let cancelled = false
 
-    getInstance(color, fontSize, duration, stagger)
+    getInstance(fontSize, duration, stagger)
       .then((instance) => {
         if (cancelled) return
         words.forEach((word, index) => {
@@ -85,6 +96,7 @@ export function HandwrittenWords({
           if (!host) return
 
           instance.create(word, "#" + uid + "-w" + index)
+          paint(host, colorAt?.(index) ?? color)
           if (index === 0) return
 
           // The library gives every word the same start time. Pushing each
@@ -109,7 +121,7 @@ export function HandwrittenWords({
         if (host) host.replaceChildren()
       })
     }
-  }, [play, plain, color, fontSize, duration, stagger, wordDelay, uid, signature, words])
+  }, [play, plain, color, colorAt, fontSize, duration, stagger, wordDelay, uid, signature, words])
 
   return (
     <>
@@ -123,7 +135,7 @@ export function HandwrittenWords({
               hosts.current[index] = el
             }}
             className={wordClassName}
-            style={wordStyle?.(index)}
+            style={{ ...wordStyle?.(index), ...(plain ? { color: colorAt?.(index) ?? color } : null) }}
           >
             {/* Left empty so the library owns this node, unless we fell back. */}
             {plain ? word : null}

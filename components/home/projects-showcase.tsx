@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useReveal } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
+import { CountUp } from "@/components/ui/count-up"
 import { LiquidWave } from "@/components/ui/liquid-wave"
 import { useLanguage } from "@/components/language-provider"
 import { useLocaleHref } from "@/lib/locale"
@@ -78,9 +79,11 @@ export default function ProjectsShowcase() {
             >
               {stats.map((stat, index) => (
                 <div key={stat.value} className="pr-8 pl-8 first:pl-0 md:pr-12">
-                  <div className="text-3xl font-bold text-white md:text-4xl">
-                    {stat.value}
-                  </div>
+                  <CountUp
+                    value={stat.value}
+                    play={sectionIsVisible}
+                    className="block text-3xl font-bold text-white md:text-4xl"
+                  />
                   <div className="mt-1 text-sm text-white/80">{copy.stats[index]}</div>
                 </div>
               ))}
