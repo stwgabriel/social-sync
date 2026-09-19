@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { CtaBeam } from "@/components/ui/cta-beam"
 import { HandwrittenWords } from "@/components/ui/handwritten-words"
 import { useLanguage } from "@/components/language-provider"
+import { useLocaleHref } from "@/lib/locale"
 import { landingCopy } from "@/lib/landing-copy"
 
 // One organic silhouette and one size for all four, so the cluster reads as a
@@ -51,6 +52,7 @@ const services = [
 ]
 
 export default function ServicesPreview() {
+  const localeHref = useLocaleHref()
   const { ref, inView } = useReveal({ threshold: 0.08 })
   const { language } = useLanguage()
   const copy = landingCopy[language].services
@@ -68,7 +70,7 @@ export default function ServicesPreview() {
           </h2>
           <CtaBeam className="mt-10 md:mt-12">
             <Link
-              href="/services"
+              href={localeHref("/services")}
               className="group inline-flex min-h-14 items-center gap-4 rounded-full bg-[#1C122F] px-7 text-sm font-semibold text-white transition-transform duration-300 hover:-translate-y-0.5"
             >
               {copy.cta}

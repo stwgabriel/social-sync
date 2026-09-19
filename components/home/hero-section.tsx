@@ -8,6 +8,7 @@ import { CtaBeam } from "@/components/ui/cta-beam"
 import { LiquidWave } from "@/components/ui/liquid-wave"
 import { useReveal } from "@/lib/reveal"
 import { useLanguage } from "@/components/language-provider"
+import { useLocaleHref } from "@/lib/locale"
 import { landingCopy } from "@/lib/landing-copy"
 
 function TikTokIcon({ className }: { className?: string }) {
@@ -39,6 +40,7 @@ function HandArrow({ className }: { className?: string }) {
 }
 
 export default function HeroSection() {
+  const localeHref = useLocaleHref()
   const { language } = useLanguage()
   const copy = landingCopy[language].hero
 
@@ -179,7 +181,7 @@ export default function HeroSection() {
           <div className="flex flex-wrap items-center justify-center gap-5">
             <CtaBeam theme="light" variant="ocean" strength={0.8}>
               <Link
-                href="/contact"
+                href={localeHref("/contact")}
                 className="group inline-flex h-14 items-center gap-2 rounded-full bg-white px-8 text-base font-semibold text-[#1C122F] transition-transform duration-300 hover:-translate-y-0.5"
               >
                 {copy.cta}

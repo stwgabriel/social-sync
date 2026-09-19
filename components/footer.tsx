@@ -5,6 +5,7 @@ import { LiquidWave } from "@/components/ui/liquid-wave"
 import Image from "next/image"
 import { Instagram, Linkedin, Youtube } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
+import { useLocaleHref } from "@/lib/locale"
 import { landingCopy } from "@/lib/landing-copy"
 
 function TikTokIcon({ className }: { className?: string }) {
@@ -28,6 +29,7 @@ const socials = [
 ]
 
 export default function Footer() {
+  const localeHref = useLocaleHref()
   const { language } = useLanguage()
   const copy = landingCopy[language]
   const navLinks = [
@@ -72,7 +74,7 @@ export default function Footer() {
             {navLinks.map((link) => (
               <Link
                 key={link.name}
-                href={link.href}
+                href={localeHref(link.href)}
                 className="text-sm text-white/90 transition-colors hover:text-white"
               >
                 {link.name}

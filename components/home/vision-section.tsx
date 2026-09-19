@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { CtaBeam } from "@/components/ui/cta-beam"
 import { LiquidWave } from "@/components/ui/liquid-wave"
 import { useLanguage } from "@/components/language-provider"
+import { useLocaleHref } from "@/lib/locale"
 import { landingCopy } from "@/lib/landing-copy"
 
 const values = [
@@ -48,6 +49,7 @@ const pins = [
 ]
 
 export default function VisionSection() {
+  const localeHref = useLocaleHref()
   const { ref: visionRef, inView: visionInView } = useReveal({ threshold: 0.15 })
   const { ref: hillsRef, inView: hillsInView } = useReveal({ threshold: 0.25 })
   const { ref: teamRef, inView: teamInView } = useReveal({ threshold: 0.3 })
@@ -241,7 +243,7 @@ export default function VisionSection() {
             <div className={cn("mt-14 opacity-0", visionInView && "animate-slide-up animation-delay-400")}>
               <CtaBeam>
                 <Link
-                  href="/services"
+                  href={localeHref("/services")}
                   className="group inline-flex items-center gap-2 rounded-full bg-[#17121F] px-8 py-4 text-sm font-semibold text-white transition-transform duration-300 hover:-translate-y-0.5"
                 >
                   {copy.cta}

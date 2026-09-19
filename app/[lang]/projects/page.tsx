@@ -1,6 +1,7 @@
 "use client"
 
 import { useLanguage } from "@/components/language-provider"
+import { useLocaleHref } from "@/lib/locale"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
@@ -29,6 +30,7 @@ type Category = {
 }
 
 export default function ProjectsPage() {
+  const localeHref = useLocaleHref()
   const { translations } = useLanguage()
   const { forceLightMode, setForceLightMode } = useThemeContext()
   const { theme, setTheme } = useTheme()
@@ -174,7 +176,7 @@ export default function ProjectsPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{translations.contact.title}</h2>
           <p className="text-lg text-white/70 mb-8">Want to create an amazing project with our team?</p>
           <Button asChild size="lg" className="bg-[#DE5B80] hover:bg-[#DE5B80]/90 text-white">
-            <Link href="/contact">{translations.services.contactUs}</Link>
+            <Link href={localeHref("/contact")}>{translations.services.contactUs}</Link>
           </Button>
         </div>
       </section>

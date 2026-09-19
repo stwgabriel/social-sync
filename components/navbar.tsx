@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { useLanguage } from "@/components/language-provider"
+import { useLocaleHref } from "@/lib/locale"
 import { ArrowRight, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -13,6 +14,7 @@ import { CtaBeam } from "@/components/ui/cta-beam"
 import { landingCopy } from "@/lib/landing-copy"
 
 export default function Navbar() {
+  const localeHref = useLocaleHref()
   const { language, setLanguage } = useLanguage()
   const pathname = usePathname()
   const copy = landingCopy[language].nav
@@ -43,7 +45,7 @@ export default function Navbar() {
       )}
     >
       <div className="flex h-24 w-full items-center justify-between px-5 sm:px-8 lg:px-[clamp(3rem,5vw,6rem)]">
-        <Link href="/" aria-label="Social Sync — Home" className="relative block h-12 w-36 sm:w-40">
+        <Link href={localeHref("/")} aria-label="Social Sync — Home" className="relative block h-12 w-36 sm:w-40">
           <Image
             src="/images/brand/social-logo.png"
             alt="Social Sync MKT"
@@ -59,10 +61,10 @@ export default function Navbar() {
           {navLinks.map((link) => (
             <Link
               key={link.name}
-              href={link.href}
+              href={localeHref(link.href)}
               className={cn(
                 "text-sm text-white/90 transition-colors hover:text-white",
-                pathname === link.href && "text-white font-medium",
+                pathname === localeHref(link.href) && "text-white font-medium",
               )}
             >
               {link.name}
@@ -74,7 +76,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <CtaBeam className="hidden sm:block" strength={0.55}>
             <Link
-              href="/contact"
+              href={localeHref("/contact")}
               className="inline-flex items-center gap-2 rounded-full border border-white/70 px-5 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
             >
               {copy.cta}
@@ -121,17 +123,17 @@ export default function Navbar() {
                   {navLinks.map((link) => (
                     <Link
                       key={link.name}
-                      href={link.href}
+                      href={localeHref(link.href)}
                       className={cn(
                         "text-lg text-white/80 transition-colors hover:text-white py-2",
-                        pathname === link.href && "text-white font-medium",
+                        pathname === localeHref(link.href) && "text-white font-medium",
                       )}
                     >
                       {link.name}
                     </Link>
                   ))}
                   <Link
-                    href="/contact"
+                    href={localeHref("/contact")}
                     className="mt-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/70 px-5 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
                   >
                     {copy.cta}

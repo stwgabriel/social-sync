@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
 import { LiquidWave } from "@/components/ui/liquid-wave"
 import { useLanguage } from "@/components/language-provider"
+import { useLocaleHref } from "@/lib/locale"
 import { landingCopy } from "@/lib/landing-copy"
 
 const stats = [
@@ -34,6 +35,7 @@ const cards = [
 ]
 
 export default function ProjectsShowcase() {
+  const localeHref = useLocaleHref()
   const { ref: sectionRef, inView: sectionIsVisible } = useReveal({
     threshold: 0.1,
   })
@@ -91,7 +93,7 @@ export default function ProjectsShowcase() {
               )}
             >
               <Link
-                href="/projects"
+                href={localeHref("/projects")}
                 className="group inline-flex items-center gap-2 text-base font-semibold text-white underline decoration-white/40 underline-offset-8 transition-colors hover:decoration-white"
               >
                 {copy.cta}
@@ -111,7 +113,7 @@ export default function ProjectsShowcase() {
               {cards.map((card, index) => (
                 <Link
                   key={card.image}
-                  href="/projects"
+                  href={localeHref("/projects")}
                   className={cn(
                     "group relative block aspect-[3/4] w-56 shrink-0 overflow-hidden rounded-2xl shadow-[0_24px_70px_rgba(0,0,0,0.55)] ring-1 ring-white/30 transition-transform duration-300 hover:scale-[1.03] hover:!z-30 md:w-[clamp(12rem,15vw,18rem)]",
                     card.className,

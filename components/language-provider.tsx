@@ -1,7 +1,8 @@
 "use client"
 
 import type React from "react"
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useCallback, useContext, useEffect, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
 import { fetchSanityData } from "@/lib/sanity"
 import { getTranslationsQuery } from "@/lib/queries"
 
@@ -221,20 +222,32 @@ export const useLanguage = () => {
 
 export default function LanguageProvider({
   children,
+  language,
 }: {
   children: React.ReactNode
+  /** Comes from the URL via the middleware, so it is correct on first paint. */
+  language: Language
 }) {
-  const [language, setLanguage] = useState<Language>("pt")
-  const [translations, setTranslations] = useState<Translations>(defaultTranslations.pt)
+  const router = useRouter()
+  const pathname = usePathname()
+  const [translations, setTranslations] = useState<Translations>(defaultTranslations[language])
   const [isLoading, setIsLoading] = useState(true)
 
-  // Load language preference from localStorage on component mount
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") as Language
-    if (savedLanguage && (savedLanguage === "pt" || savedLanguage === "en")) {
-      setLanguage(savedLanguage)
-    }
-  }, [])
+  // Changing language means going to the same page under the other locale, so
+  // the address bar and the content can never disagree.
+  const setLanguage = useCallback(
+    (next: Language) => {
+      if (next === language) return
+      const segments = (pathname || "/").split("/")
+      if (segments[1] === "pt" || segments[1] === "en") {
+        segments[1] = next
+      } else {
+        segments.splice(1, 0, next)
+      }
+      router.push(segments.join("/") || "/")
+    },
+    [language, pathname, router],
+  )
 
   // Fetch translations from Sanity when language changes
   useEffect(() => {
@@ -258,10 +271,6 @@ export default function LanguageProvider({
     }
 
     loadTranslations()
-
-    // Save language preference to localStorage
-    localStorage.setItem("language", language)
-    document.documentElement.lang = language
   }, [language])
 
   const value = {

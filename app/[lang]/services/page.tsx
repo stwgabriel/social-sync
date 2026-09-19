@@ -1,6 +1,7 @@
 "use client"
 
 import { useLanguage } from "@/components/language-provider"
+import { useLocaleHref } from "@/lib/locale"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Share2, LineChart, Code, Camera } from "lucide-react"
@@ -25,6 +26,7 @@ type Service = {
 }
 
 export default function ServicesPage() {
+  const localeHref = useLocaleHref()
   const { translations } = useLanguage()
   const { theme, setTheme } = useTheme()
   const { forceLightMode, setForceLightMode } = useThemeContext()
@@ -215,7 +217,7 @@ export default function ServicesPage() {
                       ))}
                     </ul>
                     <Button asChild className="bg-[#DE5B80] hover:bg-[#DE5B80]/90 text-white">
-                      <Link href="/contact">{translations.services.contactUs}</Link>
+                      <Link href={localeHref("/contact")}>{translations.services.contactUs}</Link>
                     </Button>
                   </div>
                   <div
@@ -284,7 +286,7 @@ export default function ServicesPage() {
                       ))}
                     </ul>
                     <Button asChild className="bg-[#DE5B80] hover:bg-[#DE5B80]/90 text-white">
-                      <Link href="/contact">{translations.services.contactUs}</Link>
+                      <Link href={localeHref("/contact")}>{translations.services.contactUs}</Link>
                     </Button>
                   </div>
                 </div>
@@ -314,7 +316,7 @@ export default function ServicesPage() {
                       ))}
                     </ul>
                     <Button asChild className="bg-[#DE5B80] hover:bg-[#DE5B80]/90 text-white">
-                      <Link href="/contact">{translations.services.contactUs}</Link>
+                      <Link href={localeHref("/contact")}>{translations.services.contactUs}</Link>
                     </Button>
                   </div>
                   <div
@@ -383,7 +385,7 @@ export default function ServicesPage() {
                       ))}
                     </ul>
                     <Button asChild className="bg-[#DE5B80] hover:bg-[#DE5B80]/90 text-white">
-                      <Link href="/contact">{translations.services.contactUs}</Link>
+                      <Link href={localeHref("/contact")}>{translations.services.contactUs}</Link>
                     </Button>
                   </div>
                 </div>
@@ -399,7 +401,7 @@ export default function ServicesPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{translations.contact.title}</h2>
           <p className="text-lg text-white/70 mb-8">{translations.contact.subtitle}</p>
           <Button asChild size="lg" className="bg-[#DE5B80] hover:bg-[#DE5B80]/90 text-white">
-            <Link href="/contact">{translations.services.contactUs}</Link>
+            <Link href={localeHref("/contact")}>{translations.services.contactUs}</Link>
           </Button>
         </div>
       </section>

@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
+export default async function ProjectPage({ params }: { params: { slug: string; lang: string } }) {
   const project = await fetchSanityData(getProjectBySlugQuery, { slug: params.slug })
 
   if (!project) {
@@ -171,7 +171,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                 <h3 className="text-xl font-bold mb-2">Interested in similar results?</h3>
                 <p className="mb-4">Let's discuss how we can help your brand achieve its goals.</p>
                 <Button asChild variant="secondary" className="w-full">
-                  <Link href="/contact">Contact Us</Link>
+                  <Link href={`/${params.lang}/contact`}>Contact Us</Link>
                 </Button>
               </div>
             </div>
@@ -179,7 +179,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
 
           <div className="mt-12">
             <Button asChild variant="outline" className="flex items-center">
-              <Link href="/projects">
+              <Link href={`/${params.lang}/projects`}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Projects
               </Link>
