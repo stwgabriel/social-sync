@@ -21,6 +21,13 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  webpack: (config) => {
+    // opentype.js (via svg-text-animate) references Node's fs for its
+    // server-side loader. That branch never runs in the browser, so the
+    // bundler just needs to stop trying to resolve it.
+    config.resolve.fallback = { ...config.resolve.fallback, fs: false, path: false }
+    return config
+  },
 }
 
 mergeConfig(nextConfig, userConfig)

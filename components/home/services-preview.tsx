@@ -5,6 +5,7 @@ import { ArrowRight, Heart, Layers, Star, Users, Video } from "lucide-react"
 import { useReveal } from "@/lib/reveal"
 import { cn } from "@/lib/utils"
 import { CtaBeam } from "@/components/ui/cta-beam"
+import { HandwrittenWords } from "@/components/ui/handwritten-words"
 import { useLanguage } from "@/components/language-provider"
 import { landingCopy } from "@/lib/landing-copy"
 
@@ -102,23 +103,26 @@ export default function ServicesPreview() {
             )
           })}
 
-          <div
-            className={cn(
-              "absolute top-[36%] z-10 hidden text-[#DE5B80] opacity-0 lg:-right-16 lg:block",
-              inView && "animate-fade-in animation-delay-600",
-            )}
-          >
-            <div className="flex flex-col items-start font-hand text-[1.75rem] leading-[0.9] sm:text-[2rem] lg:text-[2.15rem]">
-              {copy.notes.map((word, index) => (
-                <span
-                  key={word}
-                  style={{ transform: `rotate(${-8 + index * 3}deg) translateX(${index * 7}px)` }}
-                >
-                  {word}
-                </span>
-              ))}
-            </div>
-            <Heart className="ml-9 mt-3 h-6 w-6 -rotate-12" strokeWidth={1.8} aria-hidden="true" />
+          <div className="absolute top-[36%] z-10 hidden text-[#DE5B80] lg:-right-16 lg:block">
+            {/* Each word inks itself in, left to right, in the same Caveat
+                the rest of the site uses. */}
+            <HandwrittenWords
+              words={copy.notes}
+              play={inView}
+              color="#DE5B80"
+              fontSize={34}
+              className="flex flex-col items-start"
+              wordClassName="leading-[0.9]"
+              wordStyle={(index) => ({
+                transform: `rotate(${-8 + index * 3}deg) translateX(${index * 7}px)`,
+              })}
+            />
+            <Heart
+              className={cn("ml-9 mt-3 h-6 w-6 -rotate-12 opacity-0", inView && "animate-fade-in")}
+              style={{ animationDelay: "1.7s" }}
+              strokeWidth={1.8}
+              aria-hidden="true"
+            />
           </div>
         </div>
       </div>
