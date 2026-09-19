@@ -9,12 +9,17 @@ import { HandwrittenWords } from "@/components/ui/handwritten-words"
 import { useLanguage } from "@/components/language-provider"
 import { landingCopy } from "@/lib/landing-copy"
 
+// One organic silhouette and one size for all four, so the cluster reads as a
+// set. Each blob is only rotated differently, which keeps the hand-drawn feel
+// without making them four unrelated shapes.
+const BLOB_SHAPE = "rounded-[47%_53%_56%_44%/49%_51%_49%_51%]"
+const BLOB_SIZE = "h-[44%] w-[44%]"
+
 const services = [
   {
     id: "social-community",
     icon: Users,
-    position: "left-[2%] top-[5%] h-[42%] w-[42%] -rotate-[7deg]",
-    shape: "rounded-[54%_46%_57%_43%/42%_56%_44%_58%]",
+    position: "left-[3%] top-[4%] -rotate-[7deg]",
     color: "from-[#f2a4bb] via-[#de5b80] to-[#b96a9d]",
     contentRotation: "rotate-[7deg]",
     delay: "",
@@ -22,8 +27,7 @@ const services = [
   {
     id: "branding-creative",
     icon: Star,
-    position: "right-[8%] top-0 h-[45%] w-[47%] rotate-[5deg]",
-    shape: "rounded-[42%_58%_49%_51%/55%_43%_57%_45%]",
+    position: "right-[7%] top-[1%] rotate-[5deg]",
     color: "from-[#3c215b] via-[#7b3f76] to-[#de5b80]",
     contentRotation: "-rotate-[5deg]",
     delay: "animation-delay-200",
@@ -31,8 +35,7 @@ const services = [
   {
     id: "photo-video",
     icon: Video,
-    position: "bottom-[2%] left-[8%] h-[46%] w-[43%] rotate-[3deg]",
-    shape: "rounded-[46%_54%_40%_60%/58%_42%_58%_42%]",
+    position: "bottom-[3%] left-[8%] rotate-[3deg]",
     color: "from-[#3c215b] via-[#251534] to-[#1c122f]",
     contentRotation: "-rotate-[3deg]",
     delay: "animation-delay-400",
@@ -40,8 +43,7 @@ const services = [
   {
     id: "web-technology",
     icon: Layers,
-    position: "bottom-[5%] right-[5%] h-[43%] w-[43%] -rotate-[4deg]",
-    shape: "rounded-[58%_42%_52%_48%/47%_57%_43%_53%]",
+    position: "bottom-[5%] right-[4%] -rotate-[4deg]",
     color: "from-[#b7a4cf] via-[#8463a5] to-[#3c215b]",
     contentRotation: "rotate-[4deg]",
     delay: "animation-delay-600",
@@ -84,8 +86,9 @@ export default function ServicesPreview() {
                 key={service.id}
                 className={cn(
                   "absolute flex flex-col items-center justify-center bg-gradient-to-br text-center text-white opacity-0 shadow-[inset_16px_18px_50px_rgba(255,255,255,0.12),inset_-22px_-24px_60px_rgba(28,18,47,0.18)]",
+                  BLOB_SIZE,
+                  BLOB_SHAPE,
                   service.position,
-                  service.shape,
                   service.color,
                   inView && "animate-scale-in",
                   inView && service.delay,
@@ -119,7 +122,7 @@ export default function ServicesPreview() {
             />
             <Heart
               className={cn("ml-9 mt-3 h-6 w-6 -rotate-12 opacity-0", inView && "animate-fade-in")}
-              style={{ animationDelay: "1.7s" }}
+              style={{ animationDelay: "3.05s" }}
               strokeWidth={1.8}
               aria-hidden="true"
             />
