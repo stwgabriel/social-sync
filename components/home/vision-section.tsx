@@ -10,28 +10,48 @@ import { useLanguage } from "@/components/language-provider"
 import { useLocaleHref } from "@/lib/locale"
 import { landingCopy } from "@/lib/landing-copy"
 
+// Same lighting language as the service blobs: a bright rim inside the top,
+// shade gathering inside the bottom, and a soft cast underneath.
+const SHAPE_LIGHT =
+  "shadow-[inset_4px_6px_14px_rgba(255,255,255,0.5),inset_-6px_-8px_16px_rgba(28,18,47,0.3),0_10px_18px_-6px_rgba(28,18,47,0.4)]"
+
+const SHEEN =
+  "pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(115%_85%_at_32%_12%,rgba(255,255,255,0.55),rgba(255,255,255,0.12)_34%,rgba(255,255,255,0)_60%)]"
+
 const values = [
   {
-    shape: <div className="h-14 w-14 rounded-full bg-gradient-to-br from-[#C4B5FD] to-[#8B5CF6]" />,
-  },
-  {
-    shape: <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#F87171] to-[#F9A8D4]" />,
-  },
-  {
     shape: (
-      <div
-        className="h-14 w-14 bg-gradient-to-b from-[#A78BFA] to-[#F472B6]"
-        style={{ clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }}
-      />
+      <div className={cn("relative h-14 w-14 rounded-full bg-gradient-to-br from-[#C4B5FD] to-[#8B5CF6]", SHAPE_LIGHT)}>
+        <span className={SHEEN} aria-hidden="true" />
+      </div>
     ),
   },
   {
     shape: (
-      <div className="relative h-14 w-14">
-        <span className="absolute left-0 top-0 h-8 w-8 rounded-full bg-gradient-to-br from-[#A78BFA] to-[#8B5CF6]" />
-        <span className="absolute right-0 top-0 h-8 w-8 rounded-full bg-gradient-to-bl from-[#C4B5FD] to-[#A78BFA]" />
-        <span className="absolute bottom-0 left-0 h-8 w-8 rounded-full bg-gradient-to-tr from-[#8B5CF6] to-[#A78BFA]" />
-        <span className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-gradient-to-tl from-[#F472B6] to-[#A78BFA]" />
+      <div className={cn("relative h-14 w-14 rounded-2xl bg-gradient-to-br from-[#F87171] to-[#F9A8D4]", SHAPE_LIGHT)}>
+        <span className={SHEEN} aria-hidden="true" />
+      </div>
+    ),
+  },
+  {
+    // clip-path throws box-shadow away, so the cast shadow has to be a filter
+    // on the parent and the highlight has to be part of the fill.
+    shape: (
+      <div className="h-14 w-14 [filter:drop-shadow(0_8px_12px_rgba(28,18,47,0.4))]">
+        <div
+          className="h-full w-full bg-[linear-gradient(155deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.06)_38%,rgba(255,255,255,0)_62%),linear-gradient(to_bottom,#A78BFA,#F472B6)]"
+          style={{ clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }}
+        />
+      </div>
+    ),
+  },
+  {
+    shape: (
+      <div className="relative h-14 w-14 [filter:drop-shadow(0_8px_12px_rgba(28,18,47,0.35))]">
+        <span className="absolute left-0 top-0 h-8 w-8 rounded-full bg-gradient-to-br from-[#A78BFA] to-[#8B5CF6] shadow-[inset_2px_3px_7px_rgba(255,255,255,0.5),inset_-3px_-4px_8px_rgba(28,18,47,0.25)]" />
+        <span className="absolute right-0 top-0 h-8 w-8 rounded-full bg-gradient-to-bl from-[#C4B5FD] to-[#A78BFA] shadow-[inset_2px_3px_7px_rgba(255,255,255,0.5),inset_-3px_-4px_8px_rgba(28,18,47,0.25)]" />
+        <span className="absolute bottom-0 left-0 h-8 w-8 rounded-full bg-gradient-to-tr from-[#8B5CF6] to-[#A78BFA] shadow-[inset_2px_3px_7px_rgba(255,255,255,0.5),inset_-3px_-4px_8px_rgba(28,18,47,0.25)]" />
+        <span className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-gradient-to-tl from-[#F472B6] to-[#A78BFA] shadow-[inset_2px_3px_7px_rgba(255,255,255,0.5),inset_-3px_-4px_8px_rgba(28,18,47,0.25)]" />
         <span
           className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-[#F1EFE7]"
           style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}
