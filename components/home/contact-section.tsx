@@ -113,10 +113,13 @@ export default function ContactSection() {
           {/* Center: form panel */}
           <div
             className={cn(
-              "rounded-2xl border border-white/10 bg-[#221A31]/65 p-6 opacity-0 shadow-[0_30px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl md:p-8 lg:col-span-5",
+              "rounded-2xl opacity-0 shadow-[0_30px_90px_rgba(0,0,0,0.28)] lg:col-span-5",
               sectionIsVisible && "animate-slide-up animation-delay-200",
             )}
           >
+            {/* The blur lives on its own box. An element with backdrop-filter
+                clips the shadow it casts, so the two are kept apart. */}
+            <div className="rounded-2xl border border-white/10 bg-[#221A31]/65 p-6 backdrop-blur-xl md:p-8">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="space-y-2">
@@ -196,6 +199,7 @@ export default function ContactSection() {
                 </Button>
               </CtaBeam>
             </form>
+            </div>
           </div>
 
           {/* Right column: handwritten note + call card */}
@@ -213,7 +217,8 @@ export default function ContactSection() {
               className="flex -rotate-3 flex-col items-end"
             />
 
-            <div className="rounded-2xl border border-white/10 bg-[#221A31]/65 p-6 shadow-[0_30px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+            <div className="rounded-2xl shadow-[0_30px_90px_rgba(0,0,0,0.28)]">
+            <div className="rounded-2xl border border-white/10 bg-[#221A31]/65 p-6 backdrop-blur-xl">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#8B5CF6]">
                 <Calendar className="h-6 w-6 text-white" />
               </div>
@@ -233,6 +238,7 @@ export default function ContactSection() {
                   </a>
                 </Button>
               </CtaBeam>
+            </div>
             </div>
           </div>
         </div>
