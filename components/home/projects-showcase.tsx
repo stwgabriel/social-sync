@@ -48,6 +48,8 @@ export default function ProjectsShowcase() {
       {/* Top edge: looping liquid wave out of the cream section */}
       <LiquidWave
         fill="#1C122F"
+        backFill="#DE5B80"
+        backOpacity={0.6}
         shadow="0 -10px 14px rgba(28, 18, 47, 0.28)"
         className="relative block h-[48px] w-full sm:h-[66px] lg:h-[90px]"
       />

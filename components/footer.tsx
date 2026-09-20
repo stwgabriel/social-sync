@@ -45,7 +45,7 @@ export default function Footer() {
       {/* Bottom border of "Let's create together": looping two-tone liquid wave */}
       <LiquidWave
         fill="#1C122F"
-        backFill="#3C215B"
+        backFill="#B83F70"
         className="block h-24 w-full md:h-36"
       />
 

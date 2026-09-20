@@ -325,7 +325,7 @@ export default function VisionSection() {
         {/* Top border of "Let's create together": looping two-tone liquid wave */}
         <LiquidWave
           fill="#DE5B80"
-          backFill="#3C215B"
+          backFill="#B83F70"
           className="absolute inset-x-0 bottom-0 h-28 w-full md:h-36"
         />
       </div>

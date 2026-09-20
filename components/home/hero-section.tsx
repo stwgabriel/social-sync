@@ -232,6 +232,8 @@ export default function HeroSection() {
       {/* Bottom border: looping liquid wave into the cream section */}
       <LiquidWave
         fill="#F1EFE7"
+        backFill="#DE5B80"
+        backOpacity={0.55}
         shadow="0 -14px 22px rgba(60, 33, 91, 0.65)"
         className="absolute -bottom-px left-0 h-[56px] w-full sm:h-[76px] lg:h-[110px]"
       />
